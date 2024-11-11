@@ -1,0 +1,72 @@
+.player-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(200, 224, 135, 0.2);
+}
+
+.player-profile h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #4a5738; /* Darker complementary color */
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.player-profile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #c8e087;
+  box-shadow: 0 4px 12px rgba(200, 224, 135, 0.3);
+  margin: 1rem 0;
+  background-color: #f5f9ea; /* Very light shade of the main color */
+}
+
+.player-profile h4 {
+  font-size: 1.2rem;
+  color: #718355; /* Medium complementary color */
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+/* Hover effect with the main color */
+.player-profile img:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-out;
+  box-shadow: 0 6px 16px rgba(200, 224, 135, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.player-profile {
+  animation: fadeIn 0.3s ease-out;
+  background: linear-gradient(
+    to bottom right,
+    white,
+    #f5f9ea /* Very light shade of the main color */
+  );
+}
+
+/* Optional: Add a subtle green tint to the background when hovering over the card */
+.player-profile:hover {
+  background: linear-gradient(
+    to bottom right,
+    white,
+    #ebf4d4 /* Slightly darker shade of the very light background */
+  );
+  transition: background 0.3s ease;
+}

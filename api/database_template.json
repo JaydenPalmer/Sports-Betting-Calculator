@@ -1,0 +1,185 @@
+{
+  "players": [
+    {
+      "id": 1,
+      "name": "Patrick Mahomes",
+      "profilePic": "https://cdn.example.com/images/patrick-mahomes.jpg",
+      "team": "Kansas City Chiefs",
+      "height": "6'3\""
+    },
+    {
+      "id": 2,
+      "name": "Josh Allen",
+      "profilePic": "https://cdn.example.com/images/josh-allen.jpg",
+      "team": "Buffalo Bills",
+      "height": "6'5\""
+    },
+    {
+      "id": 4,
+      "name": "Aaron Rodgers",
+      "profilePic": "https://cdn.example.com/images/aaron-rodgers.jpg",
+      "team": "Green Bay Packers",
+      "height": "6'2\""
+    },
+    {
+      "id": 5,
+      "name": "Justin Herbert",
+      "profilePic": "https://cdn.example.com/images/justin-herbert.jpg",
+      "team": "Los Angeles Chargers",
+      "height": "6'6\""
+    },
+    {
+      "id": 6,
+      "name": "Lamar Jackson",
+      "profilePic": "https://cdn.example.com/images/lamar-jackson.jpg",
+      "team": "Baltimore Ravens",
+      "height": "6'2\""
+    },
+    {
+      "id": 7,
+      "name": "Russell Wilson",
+      "profilePic": "https://cdn.example.com/images/russell-wilson.jpg",
+      "team": "Denver Broncos",
+      "height": "5'11\""
+    },
+    {
+      "id": 8,
+      "name": "Kyler Murray",
+      "profilePic": "https://cdn.example.com/images/kyler-murray.jpg",
+      "team": "Arizona Cardinals",
+      "height": "5'10\""
+    },
+    {
+      "id": 9,
+      "name": "Jalen Hurts",
+      "profilePic": "https://cdn.example.com/images/jalen-hurts.jpg",
+      "team": "Philadelphia Eagles",
+      "height": "6'1\""
+    },
+    {
+      "id": 10,
+      "name": "Joe Burrow",
+      "profilePic": "https://cdn.example.com/images/joe-burrow.jpg",
+      "team": "Cincinnati Bengals",
+      "height": "6'4\""
+    }
+  ],
+  "positions": [
+    {
+      "id": 1,
+      "name": "Quarterback"
+    }
+  ],
+  "stats": [
+    {
+      "id": 1,
+      "name": "Passing Yards"
+    },
+    {
+      "id": 2,
+      "name": "Passing Touchdowns"
+    },
+    {
+      "id": 3,
+      "name": "Rushing Yards"
+    },
+    {
+      "id": 4,
+      "name": "Rushing Touchdowns"
+    },
+    {
+      "id": 5,
+      "name": "Interceptions"
+    }
+  ],
+  "positionStats": [
+    {
+      "id": 1,
+      "statId": 1,
+      "positionId": 1
+    },
+    {
+      "id": 2,
+      "statId": 2,
+      "positionId": 1
+    },
+    {
+      "id": 3,
+      "statId": 3,
+      "positionId": 1
+    },
+    {
+      "id": 4,
+      "statId": 4,
+      "positionId": 1
+    },
+    {
+      "id": 5,
+      "statId": 5,
+      "positionId": 1
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "password": "password123"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "password": "secretpassword"
+    },
+    {
+      "id": 3,
+      "name": "Michael Johnson",
+      "email": "michael.johnson@example.com",
+      "password": "abcd1234"
+    }
+  ],
+  "picks": [
+    {
+      "id": 1,
+      "userId": 1,
+      "statId": 1,
+      "predictedValue": 325,
+      "isOver": true,
+      "predictedPercentage": 75
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "statId": 2,
+      "predictedValue": 3,
+      "isOver": false,
+      "predictedPercentage": 68
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "statId": 3,
+      "predictedValue": 50,
+      "isOver": true,
+      "predictedPercentage": 82
+    }
+  ],
+  "parlays": [
+    {
+      "id": 1,
+      "pickId": 1,
+      "predictedPercentage": 85
+    },
+    {
+      "id": 2,
+      "pickId": 2,
+      "predictedPercentage": 72
+    },
+    {
+      "id": 3,
+      "pickId": 3,
+      "predictedPercentage": 90
+    }
+  ]
+}

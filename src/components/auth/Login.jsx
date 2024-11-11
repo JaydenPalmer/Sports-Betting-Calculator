@@ -1,38 +1,38 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
-import { useNavigate } from "react-router-dom"
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import "./Login.css"
-import { getUserByEmail } from "../../services/userService"
+import { getUserByEmail } from "../../services/userService";
 
 export const Login = () => {
-  const [email, set] = useState("")
-  const navigate = useNavigate()
+  const [email, set] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     return getUserByEmail(email).then((foundUsers) => {
       if (foundUsers.length === 1) {
-        const user = foundUsers[0]
+        const user = foundUsers[0];
         localStorage.setItem(
-          "learning_user",
+          "badhabits_user",
           JSON.stringify({
             id: user.id,
           })
-        )
+        );
 
-        navigate("/")
+        navigate("/");
       } else {
-        window.alert("Invalid login")
+        window.alert("Invalid login");
       }
-    })
-  }
+    });
+  };
 
   return (
     <main className="auth-container">
       <section>
         <form className="auth-form" onSubmit={handleLogin}>
-          <h1 className="header">Learning Moments</h1>
+          <h1 className="header">Bad Habits</h1>
           <h2>Please sign in</h2>
           <fieldset className="auth-fieldset">
             <div>
@@ -58,6 +58,5 @@ export const Login = () => {
         <Link to="/register">Not a member yet?</Link>
       </section>
     </main>
-  )
-}
-
+  );
+};

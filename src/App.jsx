@@ -1,3 +1,28 @@
+import { Route, Routes } from "react-router-dom";
+import { Login } from "./components/auth/Login";
+import { Register } from "./components/auth/Register";
+import { ApplicationViews } from "./views/ApplicationView";
+import { Authorized } from "./views/Authorized";
+
 export const App = () => {
-  return <div className="welcome">Welcome to Bad Habits!</div>;
+  return (
+    <>
+      {
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          <Route
+            path="*"
+            element={
+              <Authorized>
+                <ApplicationViews />
+              </Authorized>
+            }
+          />
+        </Routes>
+      }
+    </>
+  );
 };
+export default App;

@@ -1,0 +1,68 @@
+.prediction-card {
+  flex: 1;
+  max-width: 350px;
+  background: linear-gradient(to bottom right, white, #f5f9ea);
+  border-radius: 12px;
+  padding: 2rem;
+  color: #333;
+  box-shadow: 0 4px 15px rgba(200, 224, 135, 0.2);
+  margin: 2rem 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 2rem;
+}
+
+.prediction-title {
+  color: #4a5738;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.player-name {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.prediction-details {
+  font-size: 1.5rem;
+  color: #4a5738;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.prediction-percentage {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #4caf50;
+  margin-top: 1rem;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
+}
+
+.prediction-card:hover {
+  background: linear-gradient(to bottom right, white, #ebf4d4);
+  transition: background 0.3s ease;
+  box-shadow: 0 6px 20px rgba(200, 224, 135, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.prediction-card {
+  animation: fadeIn 0.3s ease-out;
+}

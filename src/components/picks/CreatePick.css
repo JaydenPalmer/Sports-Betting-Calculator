@@ -1,6 +1,18 @@
-.pick-form {
-  max-width: 600px;
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1600px;
   margin: 0 auto;
+  min-height: 80vh;
+  align-items: flex-start;
+}
+
+.pick-form {
+  flex: 2;
+  max-width: 600px;
+  margin: 0 2rem;
   padding: 2rem;
 }
 
@@ -100,20 +112,43 @@
 }
 
 /* Optional: Add some responsive adjustments */
-@media (max-width: 480px) {
+@media (max-width: 1400px) {
+  .page-container {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .page-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .player-profile,
+  .prediction-card {
+    flex: 1;
+    min-width: 300px;
+    position: static;
+  }
+
   .pick-form {
-    padding: 1rem;
+    flex: 100%;
+    order: -1;
+    margin: 0 0 2rem 0;
   }
+}
 
-  .pick-form__container {
-    padding: 1rem;
-  }
-
-  .toggle-group {
+@media (max-width: 768px) {
+  .page-container {
     flex-direction: column;
+    align-items: center;
   }
 
-  .toggle-label {
+  .player-profile,
+  .pick-form,
+  .prediction-card {
+    max-width: 100%;
     width: 100%;
   }
 }

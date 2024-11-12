@@ -10,7 +10,7 @@ font-family: "Roboto", sans-serif;
 /* COLOR PALETTE */
 /* Feel free to change these values and create your own color palette! https://coolors.co/ is a great resource */
 :root {
-  --primary: #ffb400;
+  --primary: #c8e087;
   --secondary: #00a6ed;
   --info: #7fb800;
   --warning: #f6511d;
@@ -27,11 +27,11 @@ button,
 input,
 select,
 textarea {
-  font-family: "Nunito", sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
 
 body {
-  background-color: var(--appBackground);
+  background-color: #c8e087;
   margin: 0;
 }
 
@@ -41,7 +41,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Roboto", serif;
+  font-family: "Quicksand", sans-serif;
 }
 
 /* This prevents all the links in the app from having default underline */
@@ -110,4 +110,3 @@ button {
   font-weight: bold;
   text-shadow: 2px 3px 4px lightslategray;
 }
-

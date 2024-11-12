@@ -13,9 +13,11 @@ export const PlayerProfile = ({ selectedPlayer }) => {
   }, [selectedPlayer]);
 
   useEffect(() => {
-    getPositonById(playerDetails.positionId).then((player) => {
-      setPlayerPosition(player);
-    });
+    if (playerDetails.positionId) {
+      getPositonById(playerDetails.positionId).then((player) => {
+        setPlayerPosition(player);
+      });
+    }
   }, [playerDetails]);
 
   return (

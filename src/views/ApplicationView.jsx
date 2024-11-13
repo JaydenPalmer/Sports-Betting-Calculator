@@ -4,6 +4,7 @@ import { CreatePick } from "../components/picks/CreatePick";
 import { NavBar } from "../components/navbar/NavBar";
 import { AllPicks } from "../components/picks/AllPicks";
 import { MyPicks } from "../components/picks/My Picks";
+import { FavoritePicks } from "../components/picks/FavoritePicks";
 
 export const ApplicationViews = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -33,7 +34,14 @@ export const ApplicationViews = () => {
           path="/makepicks"
           element={<CreatePick currentUser={currentUser} />}
         />
-        <Route path="/mypicks" element={<MyPicks />} />
+        <Route
+          path="/favoritepicks"
+          element={<FavoritePicks currentUser={currentUser} />}
+        />
+        <Route
+          path="/mypicks"
+          element={<MyPicks currentUser={currentUser} />}
+        />
       </Route>
     </Routes>
   );

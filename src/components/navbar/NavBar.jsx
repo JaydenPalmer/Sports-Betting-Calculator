@@ -1,8 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./NavBar.css";
 
 export const NavBar = ({ currentUser }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     localStorage.removeItem("badhabits_user"); // Remove pizza_user on logout
@@ -24,6 +25,14 @@ export const NavBar = ({ currentUser }) => {
         <li>
           <Link to="/" className={location.pathname === "/" ? "active" : ""}>
             <span>All Picks</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/favoritepicks"
+            className={location.pathname === "/favoritepicks" ? "active" : ""}
+          >
+            <span>Favorite Picks</span>
           </Link>
         </li>
         <li>

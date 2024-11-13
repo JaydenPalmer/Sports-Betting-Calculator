@@ -175,6 +175,51 @@
       "predictedValue": 50,
       "isOver": true,
       "predictedPercentage": 82
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "statId": 1,
+      "playerId": 9,
+      "predictedValue": 280,
+      "isOver": true,
+      "predictedPercentage": 77
+    },
+    {
+      "id": 5,
+      "userId": 2,
+      "statId": 4,
+      "playerId": 6,
+      "predictedValue": 2,
+      "isOver": true,
+      "predictedPercentage": 65
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "statId": 5,
+      "playerId": 10,
+      "predictedValue": 1,
+      "isOver": false,
+      "predictedPercentage": 88
+    },
+    {
+      "id": 7,
+      "userId": 1,
+      "statId": 2,
+      "playerId": 5,
+      "predictedValue": 4,
+      "isOver": true,
+      "predictedPercentage": 71
+    },
+    {
+      "id": 8,
+      "userId": 2,
+      "statId": 3,
+      "playerId": 8,
+      "predictedValue": 45,
+      "isOver": true,
+      "predictedPercentage": 69
     }
   ],
   "parlays": [
@@ -192,6 +237,68 @@
       "id": 3,
       "pickId": 3,
       "predictedPercentage": 90
+    }
+  ],
+  "tails": [
+    {
+      "id": 1,
+      "userId": 2,
+      "pickId": 1
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "pickId": 1
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "pickId": 2
+    },
+    {
+      "id": 4,
+      "userId": 3,
+      "pickId": 4
+    },
+    {
+      "id": 5,
+      "userId": 2,
+      "pickId": 4
+    },
+    {
+      "id": 6,
+      "userId": 1,
+      "pickId": 5
+    },
+    {
+      "id": 7,
+      "userId": 2,
+      "pickId": 6
+    },
+    {
+      "id": 8,
+      "userId": 1,
+      "pickId": 7
+    },
+    {
+      "id": 9,
+      "userId": 3,
+      "pickId": 7
+    },
+    {
+      "id": 10,
+      "userId": 2,
+      "pickId": 8
+    },
+    {
+      "id": 11,
+      "userId": 3,
+      "pickId": 8
+    },
+    {
+      "id": 12,
+      "userId": 1,
+      "pickId": 3
     }
   ]
 }

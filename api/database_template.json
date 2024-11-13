@@ -3,64 +3,73 @@
     {
       "id": 1,
       "name": "Patrick Mahomes",
-      "profilePic": "https://cdn.example.com/images/patrick-mahomes.jpg",
+      "profilePic": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png",
       "team": "Kansas City Chiefs",
+      "positionId": 1,
       "height": "6'3\""
     },
     {
       "id": 2,
       "name": "Josh Allen",
-      "profilePic": "https://cdn.example.com/images/josh-allen.jpg",
+      "profilePic": "https://a.espncdn.com/i/headshots/nfl/players/full/3918298.png",
       "team": "Buffalo Bills",
+      "positionId": 1,
       "height": "6'5\""
     },
     {
       "id": 4,
       "name": "Aaron Rodgers",
-      "profilePic": "https://cdn.example.com/images/aaron-rodgers.jpg",
+      "profilePic": "https://a.espncdn.com/i/headshots/nfl/players/full/8439.png",
       "team": "Green Bay Packers",
+      "positionId": 1,
       "height": "6'2\""
     },
     {
       "id": 5,
       "name": "Justin Herbert",
-      "profilePic": "https://cdn.example.com/images/justin-herbert.jpg",
+      "profilePic": "https://a.espncdn.com/i/headshots/nfl/players/full/4038941.png",
       "team": "Los Angeles Chargers",
+      "positionId": 1,
       "height": "6'6\""
     },
     {
       "id": 6,
       "name": "Lamar Jackson",
-      "profilePic": "https://cdn.example.com/images/lamar-jackson.jpg",
+      "profilePic": "https://a.espncdn.com/i/headshots/nfl/players/full/3916387.png",
       "team": "Baltimore Ravens",
+      "positionId": 1,
       "height": "6'2\""
     },
     {
       "id": 7,
       "name": "Russell Wilson",
-      "profilePic": "https://cdn.example.com/images/russell-wilson.jpg",
+      "profilePic": "https://a.espncdn.com/i/headshots/nfl/players/full/14881.png",
       "team": "Denver Broncos",
+      "positionId": 1,
       "height": "5'11\""
     },
     {
       "id": 8,
       "name": "Kyler Murray",
-      "profilePic": "https://cdn.example.com/images/kyler-murray.jpg",
+      "profilePic": "https://a.espncdn.com/i/headshots/nfl/players/full/3917315.png",
       "team": "Arizona Cardinals",
+      "positionId": 1,
       "height": "5'10\""
     },
     {
       "id": 9,
       "name": "Jalen Hurts",
-      "profilePic": "https://cdn.example.com/images/jalen-hurts.jpg",
+      "profilePic": "https://a.espncdn.com/i/headshots/nfl/players/full/4040715.png",
       "team": "Philadelphia Eagles",
+      "positionId": 1,
       "height": "6'1\""
     },
     {
       "id": 10,
       "name": "Joe Burrow",
-      "profilePic": "https://cdn.example.com/images/joe-burrow.jpg",
+      "profilePic": "https://a.espncdn.com/i/headshots/nfl/players/full/3915511.png",
       "team": "Cincinnati Bengals",
+      "positionId": 1,
       "height": "6'4\""
     }
   ],
@@ -144,6 +153,7 @@
       "id": 1,
       "userId": 1,
       "statId": 1,
+      "playerId": 1,
       "predictedValue": 325,
       "isOver": true,
       "predictedPercentage": 75
@@ -152,6 +162,7 @@
       "id": 2,
       "userId": 2,
       "statId": 2,
+      "playerId": 2,
       "predictedValue": 3,
       "isOver": false,
       "predictedPercentage": 68
@@ -160,9 +171,55 @@
       "id": 3,
       "userId": 3,
       "statId": 3,
+      "playerId": 4,
       "predictedValue": 50,
       "isOver": true,
       "predictedPercentage": 82
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "statId": 1,
+      "playerId": 9,
+      "predictedValue": 280,
+      "isOver": true,
+      "predictedPercentage": 77
+    },
+    {
+      "id": 5,
+      "userId": 2,
+      "statId": 4,
+      "playerId": 6,
+      "predictedValue": 2,
+      "isOver": true,
+      "predictedPercentage": 65
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "statId": 5,
+      "playerId": 10,
+      "predictedValue": 1,
+      "isOver": false,
+      "predictedPercentage": 88
+    },
+    {
+      "id": 7,
+      "userId": 1,
+      "statId": 2,
+      "playerId": 5,
+      "predictedValue": 4,
+      "isOver": true,
+      "predictedPercentage": 71
+    },
+    {
+      "id": 8,
+      "userId": 2,
+      "statId": 3,
+      "playerId": 8,
+      "predictedValue": 45,
+      "isOver": true,
+      "predictedPercentage": 69
     }
   ],
   "parlays": [
@@ -180,6 +237,68 @@
       "id": 3,
       "pickId": 3,
       "predictedPercentage": 90
+    }
+  ],
+  "tails": [
+    {
+      "id": 1,
+      "userId": 2,
+      "pickId": 1
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "pickId": 1
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "pickId": 2
+    },
+    {
+      "id": 4,
+      "userId": 3,
+      "pickId": 4
+    },
+    {
+      "id": 5,
+      "userId": 2,
+      "pickId": 4
+    },
+    {
+      "id": 6,
+      "userId": 1,
+      "pickId": 5
+    },
+    {
+      "id": 7,
+      "userId": 2,
+      "pickId": 6
+    },
+    {
+      "id": 8,
+      "userId": 1,
+      "pickId": 7
+    },
+    {
+      "id": 9,
+      "userId": 3,
+      "pickId": 7
+    },
+    {
+      "id": 10,
+      "userId": 2,
+      "pickId": 8
+    },
+    {
+      "id": 11,
+      "userId": 3,
+      "pickId": 8
+    },
+    {
+      "id": 12,
+      "userId": 1,
+      "pickId": 3
     }
   ]
 }

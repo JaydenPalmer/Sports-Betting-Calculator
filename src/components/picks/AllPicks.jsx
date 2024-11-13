@@ -11,6 +11,11 @@ export const AllPicks = ({ currentUser }) => {
     });
   }, [currentUser]);
 
+  const handleTailBtn = (event) => {
+    event.preventDefault();
+    console.log("liked");
+  };
+
   return (
     <div className="picks-container">
       <ul className="picks-grid">
@@ -35,7 +40,8 @@ export const AllPicks = ({ currentUser }) => {
               <h2
                 className={pick.isOver ? "over-indicator" : "under-indicator"}
               >
-                {pick.isOver ? "Over" : "Under"}
+                {pick.isOver ? "Over" : "Under"} {pick.predictedValue}{" "}
+                {pick.stat.name}
               </h2>
 
               <div className="prediction-section">
@@ -49,7 +55,9 @@ export const AllPicks = ({ currentUser }) => {
                 <span className="user-name">{pick.user.name}</span>
                 <div className="button-container">
                   {currentUser !== pick.userId ? (
-                    <button className="tail-button">Tail</button>
+                    <button className="tail-button" onClick={handleTailBtn}>
+                      Tail
+                    </button>
                   ) : (
                     <div className="button-container">
                       <button className="edit-button">Edit Pick</button>

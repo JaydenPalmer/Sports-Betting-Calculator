@@ -25,7 +25,7 @@ export const BadhabitsPrediction = ({
   return (
     <div>
       <h2 className="prediction-title">Bad Habits' Prediction</h2>
-      <h3 className="player-name">{playerDetails?.name}</h3>
+      <h3 id="player-name">{playerDetails?.name}</h3>
       <h3 className="prediction-details">
         <span className="text-capitalize">{selectedOverUnder}</span>
         <span>{predictedValue}</span>

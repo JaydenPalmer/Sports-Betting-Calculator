@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPlayers } from "../../services/playerService";
+import { getPlayerAverages, getPlayers } from "../../services/playerService";
 import { getPositions } from "../../services/positionService";
 import { getStats } from "../../services/statService";
 import { PlayerProfile } from "./PlayerProfile";
@@ -18,7 +18,7 @@ export const CreatePick = ({ currentUser }) => {
   const [predictedValue, setPredictedValue] = useState("");
   const [selectedOverUnder, setSelectedOverUnder] = useState(null);
 
-  const [predictedPercentage, setPredictedPercentage] = useState(75);
+  const [predictedPercentage, setPredictedPercentage] = useState("");
   const [pick, setPick] = useState([]);
 
   useEffect(() => {
@@ -32,6 +32,39 @@ export const CreatePick = ({ currentUser }) => {
       setStats(s);
     });
   }, []);
+
+  useEffect(() => {
+    const playerObj = players.find((player) => player.id === selectedPlayer);
+    const statObj = stats.find((stat) => stat.id === selectedStat);
+
+    if (
+      playerObj?.espnId &&
+      selectedPosition &&
+      statObj?.name && // Changed this to use statObj
+      selectedOverUnder &&
+      predictedValue
+    ) {
+      const espnId = playerObj.espnId;
+      const playerStats = statObj.name; // Use the stat name here
+      const threshold = predictedValue;
+      const overUnder = selectedOverUnder;
+
+      getPlayerAverages(espnId, playerStats, threshold, overUnder).then(
+        (percentage) => {
+          setPredictedPercentage(percentage);
+          console.log(percentage);
+        }
+      );
+    }
+  }, [
+    selectedPlayer,
+    selectedPosition,
+    selectedStat,
+    selectedOverUnder,
+    predictedValue,
+    players,
+    stats, // Add stats to dependency array
+  ]);
 
   const handleMakePickBtn = (event) => {
     event.preventDefault();
@@ -48,7 +81,7 @@ export const CreatePick = ({ currentUser }) => {
         playerId: selectedPlayer,
         predictedValue: predictedValue,
         isOver: selectedOverUnder === "Over" ? true : false,
-        predictedPercentage: 75,
+        predictedPercentage: predictedPercentage,
       };
 
       console.log(pickObj);

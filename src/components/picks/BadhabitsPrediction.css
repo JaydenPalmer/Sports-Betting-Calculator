@@ -21,7 +21,7 @@
   letter-spacing: 1px;
 }
 
-.player-name {
+#player-name {
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 1rem;

@@ -38,7 +38,8 @@ export const MyPicks = ({ currentUser }) => {
               <h2
                 className={pick.isOver ? "over-indicator" : "under-indicator"}
               >
-                {pick.isOver ? "Over" : "Under"}
+                {pick.isOver ? "Over" : "Under"} {pick.predictedValue}{" "}
+                {pick.stat.name}
               </h2>
 
               <div className="prediction-section">

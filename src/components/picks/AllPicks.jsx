@@ -1,19 +1,28 @@
 import { useEffect, useState } from "react";
 import { getAllPicks } from "../../services/pickService";
 import "./AllPicks.css";
+import { getTailsByUserId } from "../../services/tailsService";
 
 export const AllPicks = ({ currentUser }) => {
   const [picks, setPicks] = useState([]);
+  const [currentUserTails, setCurrentUserTails] = useState([]);
 
   useEffect(() => {
     getAllPicks().then((picks) => {
       setPicks(picks);
     });
+    getTailsByUserId(currentUser).then((userTails) => {
+      setCurrentUserTails(userTails);
+    });
   }, [currentUser]);
 
   const handleTailBtn = (event) => {
     event.preventDefault();
-    console.log("liked");
+    if (event.target.value === "Tail") {
+      console.log("Tail This Pick POST to database");
+    } else {
+      console.log("Trash Pick DELETE Tail from database");
+    }
   };
 
   return (
@@ -55,8 +64,18 @@ export const AllPicks = ({ currentUser }) => {
                 <span className="user-name">{pick.user.name}</span>
                 <div className="button-container">
                   {currentUser !== pick.userId ? (
-                    <button className="tail-button" onClick={handleTailBtn}>
-                      Tail
+                    <button
+                      className="tail-button"
+                      value={
+                        currentUserTails.find((tail) => tail.pickId === pick.id)
+                          ? "Tail"
+                          : "Trash"
+                      }
+                      onClick={handleTailBtn}
+                    >
+                      {currentUserTails.find((tail) => tail.pickId === pick.id)
+                        ? "Tail"
+                        : "Trash"}
                     </button>
                   ) : (
                     <div className="button-container">

@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { getAllPicks } from "../../services/pickService";
 import { AllPicks } from "./AllPicks";
+import { useNavigate } from "react-router-dom";
 
 export const MyPicks = ({ currentUser }) => {
   const [picks, setPicks] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllPicks().then((allPicks) => {
@@ -13,6 +16,11 @@ export const MyPicks = ({ currentUser }) => {
       setPicks(filteredPicks);
     });
   }, [currentUser]);
+
+  const handleEditBtn = (event) => {
+    event.preventDefault();
+    navigate(`/mypicks/${event.target.value}`);
+  };
 
   return (
     <div className="picks-container">
@@ -53,7 +61,13 @@ export const MyPicks = ({ currentUser }) => {
                 <span className="user-name">{pick.user.name}</span>
                 <div className="button-container">
                   <div className="button-container">
-                    <button className="edit-button">Edit Pick</button>
+                    <button
+                      className="edit-button"
+                      value={pick.id}
+                      onClick={handleEditBtn}
+                    >
+                      Edit Pick
+                    </button>
                     <button className="delete-button">Delete</button>
                   </div>
                 </div>

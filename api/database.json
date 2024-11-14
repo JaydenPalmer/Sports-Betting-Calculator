@@ -186,13 +186,13 @@
       "predictedPercentage": 75
     },
     {
-      "id": 4,
       "userId": 1,
       "statId": 1,
       "playerId": 10,
       "predictedValue": 267.5,
-      "isOver": true,
-      "predictedPercentage": 58
+      "isOver": false,
+      "predictedPercentage": 49,
+      "id": 4
     },
     {
       "id": 5,
@@ -293,7 +293,6 @@
       "predictedPercentage": 90
     }
   ],
-
   "tails": [
     {
       "id": 1,

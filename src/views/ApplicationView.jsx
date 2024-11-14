@@ -5,6 +5,7 @@ import { NavBar } from "../components/navbar/NavBar";
 import { AllPicks } from "../components/picks/AllPicks";
 import { MyPicks } from "../components/picks/My Picks";
 import { FavoritePicks } from "../components/picks/FavoritePicks";
+import { EditPick } from "../components/picks/EditPick";
 
 export const ApplicationViews = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -41,6 +42,10 @@ export const ApplicationViews = () => {
         <Route
           path="/mypicks"
           element={<MyPicks currentUser={currentUser} />}
+        />
+        <Route
+          path="/mypicks/:pickId"
+          element={<EditPick currentUser={currentUser} />}
         />
       </Route>
     </Routes>

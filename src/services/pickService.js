@@ -19,3 +19,22 @@ export const updatePick = (pickId, updatedPick) => {
     body: JSON.stringify(updatedPick),
   });
 };
+
+export const deletePick = (pickId) => {
+  return fetch(`http://localhost:8088/picks/${pickId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+export const postPick = (postObj) => {
+  return fetch("http://localhost:8088/picks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(postObj),
+  });
+};

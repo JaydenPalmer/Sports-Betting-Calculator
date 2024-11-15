@@ -155,18 +155,15 @@
       "name": "Michael Johnson",
       "email": "michael.johnson@example.com",
       "password": "abcd1234"
+    },
+    {
+      "email": "jayxanderpalm@gmail.com",
+      "fullName": "Jayden Palmer",
+      "cohort": null,
+      "id": 4
     }
   ],
   "picks": [
-    {
-      "id": 1,
-      "userId": 1,
-      "statId": 1,
-      "playerId": 1,
-      "predictedValue": 285.5,
-      "isOver": true,
-      "predictedPercentage": 64
-    },
     {
       "id": 2,
       "userId": 2,
@@ -186,13 +183,13 @@
       "predictedPercentage": 75
     },
     {
+      "id": 4,
       "userId": 1,
       "statId": 1,
       "playerId": 10,
       "predictedValue": 267.5,
-      "isOver": false,
-      "predictedPercentage": 49,
-      "id": 4
+      "isOver": true,
+      "predictedPercentage": 58
     },
     {
       "id": 5,
@@ -274,14 +271,27 @@
       "predictedValue": 277.5,
       "isOver": false,
       "predictedPercentage": 55
+    },
+    {
+      "userId": 1,
+      "statId": 1,
+      "playerId": 1,
+      "predictedValue": "199.5",
+      "isOver": true,
+      "predictedPercentage": 80,
+      "id": 14
+    },
+    {
+      "userId": 4,
+      "statId": 2,
+      "playerId": 1,
+      "predictedValue": "1.5",
+      "isOver": true,
+      "predictedPercentage": 84,
+      "id": 15
     }
   ],
   "parlays": [
-    {
-      "id": 1,
-      "pickId": 1,
-      "predictedPercentage": 85
-    },
     {
       "id": 2,
       "pickId": 2,
@@ -294,16 +304,6 @@
     }
   ],
   "tails": [
-    {
-      "id": 1,
-      "userId": 2,
-      "pickId": 1
-    },
-    {
-      "id": 2,
-      "userId": 3,
-      "pickId": 1
-    },
     {
       "id": 3,
       "userId": 1,

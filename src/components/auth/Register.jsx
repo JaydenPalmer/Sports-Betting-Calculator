@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import { createUser, getUserByEmail } from "../../services/userService";
 
@@ -7,7 +7,6 @@ export const Register = (props) => {
   const [user, setUser] = useState({
     email: "",
     fullName: "",
-    cohort: 0,
   });
   let navigate = useNavigate();
 
@@ -51,53 +50,48 @@ export const Register = (props) => {
   };
 
   return (
-    <main className="auth-container">
-      <form className="auth-form" onSubmit={handleRegister}>
-        <h1 className="header">Bad Habits</h1>
-        <h2>Please Register</h2>
-        <fieldset className="auth-fieldset">
-          <div>
-            <input
-              onChange={updateUser}
-              type="text"
-              id="fullName"
-              className="auth-form-input"
-              placeholder="Enter your name"
-              required
-              autoFocus
-            />
-          </div>
-        </fieldset>
-        <fieldset className="auth-fieldset">
-          <div>
-            <input
-              onChange={updateUser}
-              type="email"
-              id="email"
-              className="auth-form-input"
-              placeholder="Email address"
-              required
-            />
-          </div>
-        </fieldset>
-        <fieldset className="auth-fieldset">
-          <div>
-            <input
-              onChange={updateUser}
-              type="number"
-              id="cohort"
-              className="auth-form-input"
-              placeholder="Cohort #"
-              required
-            />
-          </div>
-        </fieldset>
-        <fieldset className="auth-fieldset">
-          <div>
-            <button type="submit">Register</button>
-          </div>
-        </fieldset>
-      </form>
+    <main className="login-page">
+      <section className="login-card">
+        <form className="login-form" onSubmit={handleRegister}>
+          <h1 className="login-brand">Bad Habits</h1>
+          <h2 className="login-subtitle">Please Register</h2>
+          <fieldset className="login-input-group">
+            <div>
+              <input
+                onChange={updateUser}
+                type="text"
+                id="fullName"
+                className="login-input"
+                placeholder="Enter your name"
+                required
+                autoFocus
+              />
+            </div>
+          </fieldset>
+          <fieldset className="login-input-group">
+            <div>
+              <input
+                onChange={updateUser}
+                type="email"
+                id="email"
+                className="login-input"
+                placeholder="Email address"
+                required
+              />
+            </div>
+          </fieldset>
+          <fieldset className="login-input-group">
+            <div>
+              <button className="login-button" type="submit">
+                Register
+              </button>
+            </div>
+          </fieldset>
+        </form>
+        <section className="login-signup">
+          <Link to="/login">Already have an account?</Link>
+        </section>
+      </section>
     </main>
   );
 };

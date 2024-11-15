@@ -28,7 +28,6 @@ export const FavoritePicks = ({ currentUser }) => {
 
   return (
     <div className="picks-container">
-      <h2 className="picks-title">My Favorite Picks</h2>
       <ul className="picks-grid">
         {favorites.map((pick) => (
           <li key={pick.id} className="pick-card">

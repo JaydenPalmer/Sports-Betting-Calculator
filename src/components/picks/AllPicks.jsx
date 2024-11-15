@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { getAllPicks } from "../../services/pickService";
+import { deletePick, getAllPicks } from "../../services/pickService";
 import "./AllPicks.css";
 import { getTailsByUserId } from "../../services/tailsService";
+import { useNavigate } from "react-router-dom";
 
 export const AllPicks = ({ currentUser }) => {
   const [picks, setPicks] = useState([]);
   const [currentUserTails, setCurrentUserTails] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllPicks().then((picks) => {
@@ -23,6 +25,16 @@ export const AllPicks = ({ currentUser }) => {
     } else {
       console.log("Trash Pick DELETE Tail from database");
     }
+  };
+
+  const handleEditBtn = (pickId) => {
+    navigate(`/mypicks/${pickId}`);
+  };
+
+  const deletePickBtn = (event) => {
+    deletePick(event.target.value).then(() => {
+      getAllPicks().then(setPicks);
+    });
   };
 
   return (
@@ -68,19 +80,30 @@ export const AllPicks = ({ currentUser }) => {
                       className="tail-button"
                       value={
                         currentUserTails.find((tail) => tail.pickId === pick.id)
-                          ? "Tail"
-                          : "Trash"
+                          ? "Trash"
+                          : "Tail"
                       }
                       onClick={handleTailBtn}
                     >
                       {currentUserTails.find((tail) => tail.pickId === pick.id)
-                        ? "Tail"
-                        : "Trash"}
+                        ? "Trash"
+                        : "Tail"}
                     </button>
                   ) : (
                     <div className="button-container">
-                      <button className="edit-button">Edit Pick</button>
-                      <button className="delete-button">Delete</button>
+                      <button
+                        className="edit-button"
+                        onClick={() => handleEditBtn(pick.id)}
+                      >
+                        Edit Pick
+                      </button>
+                      <button
+                        className="delete-button"
+                        value={pick.id}
+                        onClick={deletePickBtn}
+                      >
+                        Delete
+                      </button>
                     </div>
                   )}
                 </div>

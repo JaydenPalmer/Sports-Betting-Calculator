@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./NavBar.css";
+import badhabitsLogo from "../../images/badhabitsLogo.webp";
 
 export const NavBar = ({ currentUser }) => {
   const navigate = useNavigate();
@@ -14,6 +15,11 @@ export const NavBar = ({ currentUser }) => {
   return (
     <nav>
       <ul>
+        <li>
+          <Link to="/">
+            <img src={`${badhabitsLogo}`} alt="badhabits logo" />
+          </Link>
+        </li>
         <li>
           <Link
             to="/makepicks"

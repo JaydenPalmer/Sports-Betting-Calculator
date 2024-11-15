@@ -6,6 +6,7 @@ import { AllPicks } from "../components/picks/AllPicks";
 import { MyPicks } from "../components/picks/My Picks";
 import { FavoritePicks } from "../components/picks/FavoritePicks";
 import { EditPick } from "../components/picks/EditPick";
+import { AnimatedBackground } from "../components/animations/background";
 
 export const ApplicationViews = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -22,6 +23,7 @@ export const ApplicationViews = () => {
     return (
       <>
         <NavBar />
+        <AnimatedBackground />
         <Outlet />
       </>
     );

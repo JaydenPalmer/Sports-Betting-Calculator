@@ -29,17 +29,17 @@ export const Login = () => {
   };
 
   return (
-    <main className="auth-container">
-      <section>
-        <form className="auth-form" onSubmit={handleLogin}>
-          <h1 className="header">Bad Habits</h1>
-          <h2>Please sign in</h2>
-          <fieldset className="auth-fieldset">
+    <main className="login-page">
+      <section className="login-card">
+        <form className="login-form" onSubmit={handleLogin}>
+          <h1 className="login-brand">Bad Habits</h1>
+          <h2 className="login-subtitle">Please sign in</h2>
+          <fieldset className="login-input-group">
             <div>
               <input
                 type="email"
                 value={email}
-                className="auth-form-input"
+                className="login-input"
                 onChange={(evt) => set(evt.target.value)}
                 placeholder="Email address"
                 required
@@ -47,15 +47,17 @@ export const Login = () => {
               />
             </div>
           </fieldset>
-          <fieldset className="auth-fieldset">
+          <fieldset className="login-input-group">
             <div>
-              <button type="submit">Sign in</button>
+              <button className="login-button" type="submit">
+                Sign in
+              </button>
             </div>
           </fieldset>
         </form>
-      </section>
-      <section className="register-link">
-        <Link to="/register">Not a member yet?</Link>
+        <section className="login-signup">
+          <Link to="/register">Not a member yet?</Link>
+        </section>
       </section>
     </main>
   );

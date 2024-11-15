@@ -6,6 +6,8 @@ import { PlayerProfile } from "./PlayerProfile";
 import "./CreatePick.css";
 import "./PlayerProfile.css";
 import { BadhabitsPrediction } from "./BadHabitsPrediction";
+import { postPick } from "../../services/pickService";
+import { useNavigate } from "react-router-dom";
 
 export const CreatePick = ({ currentUser }) => {
   const [players, setPlayers] = useState([]);
@@ -19,7 +21,8 @@ export const CreatePick = ({ currentUser }) => {
   const [selectedOverUnder, setSelectedOverUnder] = useState(null);
 
   const [predictedPercentage, setPredictedPercentage] = useState("");
-  const [pick, setPick] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getPlayers().then((p) => {
@@ -33,7 +36,8 @@ export const CreatePick = ({ currentUser }) => {
     });
   }, []);
 
-  useEffect(() => {
+  const handleCalculateBtn = (event) => {
+    event.preventDefault();
     const playerObj = players.find((player) => player.id === selectedPlayer);
     const statObj = stats.find((stat) => stat.id === selectedStat);
 
@@ -55,16 +59,12 @@ export const CreatePick = ({ currentUser }) => {
           console.log(percentage);
         }
       );
+    } else {
+      window.alert(
+        "Please be sure to finish your pick before attempting to calculate!"
+      );
     }
-  }, [
-    selectedPlayer,
-    selectedPosition,
-    selectedStat,
-    selectedOverUnder,
-    predictedValue,
-    players,
-    stats, // Add stats to dependency array
-  ]);
+  };
 
   const handleMakePickBtn = (event) => {
     event.preventDefault();
@@ -84,18 +84,23 @@ export const CreatePick = ({ currentUser }) => {
         predictedPercentage: predictedPercentage,
       };
 
-      console.log(pickObj);
-      setPick(pickObj);
+      postPick(pickObj)
+        .then(() => {
+          navigate("/");
+        })
+        .catch((error) => {
+          console.error("Error posting pick:", error);
+        });
     }
   };
 
   return (
     <div className="content-wrapper">
-      <section className="player-profile">
-        {selectedPlayer ? (
+      {selectedPlayer ? (
+        <section className="player-profile">
           <PlayerProfile selectedPlayer={selectedPlayer} />
-        ) : null}
-      </section>
+        </section>
+      ) : null}
       <form className="pick-form">
         <h2 className="pick-form__title">Make Your Pick</h2>
         <div className="pick-form__container">
@@ -186,32 +191,36 @@ export const CreatePick = ({ currentUser }) => {
               </label>
             </div>
           </div>
+          <button
+            className="btn btn-primary btn-lg btn-block"
+            onClick={handleCalculateBtn}
+          >
+            Calculate Badhabits Prediction
+          </button>
         </div>
       </form>
-      <div className="prediction-card">
-        {selectedPlayer &&
-        selectedPosition &&
-        selectedStat &&
-        selectedOverUnder &&
-        predictedValue ? (
-          <>
-            <BadhabitsPrediction
-              selectedPlayer={Number(selectedPlayer)}
-              predictedValue={String(predictedValue)}
-              selectedOverUnder={String(selectedOverUnder)}
-              selectedStat={Number(selectedStat)}
-              predictedPercentage={Number(predictedPercentage)}
-            />
-            <button
-              type="button"
-              className="btn btn-primary btn-lg btn-block"
-              onClick={handleMakePickBtn}
-            >
-              Post Pick
-            </button>
-          </>
-        ) : null}
-      </div>
+      {selectedPlayer &&
+      selectedPosition &&
+      selectedStat &&
+      selectedOverUnder &&
+      predictedValue ? (
+        <div className="prediction-card">
+          <BadhabitsPrediction
+            selectedPlayer={Number(selectedPlayer)}
+            predictedValue={String(predictedValue)}
+            selectedOverUnder={String(selectedOverUnder)}
+            selectedStat={Number(selectedStat)}
+            predictedPercentage={Number(predictedPercentage)}
+          />
+          <button
+            type="button"
+            className="btn btn-primary btn-lg btn-block"
+            onClick={handleMakePickBtn}
+          >
+            Post Pick
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 };

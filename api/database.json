@@ -155,15 +155,18 @@
       "name": "Michael Johnson",
       "email": "michael.johnson@example.com",
       "password": "abcd1234"
-    },
-    {
-      "email": "jayxanderpalm@gmail.com",
-      "fullName": "Jayden Palmer",
-      "cohort": null,
-      "id": 4
     }
   ],
   "picks": [
+    {
+      "id": 1,
+      "userId": 1,
+      "statId": 1,
+      "playerId": 1,
+      "predictedValue": 285.5,
+      "isOver": true,
+      "predictedPercentage": 64
+    },
     {
       "id": 2,
       "userId": 2,
@@ -274,24 +277,29 @@
     },
     {
       "userId": 1,
-      "statId": 1,
-      "playerId": 1,
-      "predictedValue": "199.5",
-      "isOver": true,
-      "predictedPercentage": 80,
+      "statId": 2,
+      "playerId": 4,
+      "predictedValue": "111.5",
+      "isOver": false,
+      "predictedPercentage": 99,
       "id": 14
     },
     {
-      "userId": 4,
+      "userId": 1,
       "statId": 2,
-      "playerId": 1,
-      "predictedValue": "1.5",
-      "isOver": true,
-      "predictedPercentage": 84,
+      "playerId": 5,
+      "predictedValue": "0.5",
+      "isOver": false,
+      "predictedPercentage": 1,
       "id": 15
     }
   ],
   "parlays": [
+    {
+      "id": 1,
+      "pickId": 1,
+      "predictedPercentage": 85
+    },
     {
       "id": 2,
       "pickId": 2,
@@ -305,9 +313,14 @@
   ],
   "tails": [
     {
-      "id": 3,
-      "userId": 1,
-      "pickId": 2
+      "id": 1,
+      "userId": 2,
+      "pickId": 1
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "pickId": 1
     },
     {
       "id": 4,
@@ -315,24 +328,9 @@
       "pickId": 4
     },
     {
-      "id": 5,
-      "userId": 2,
-      "pickId": 4
-    },
-    {
-      "id": 6,
-      "userId": 1,
-      "pickId": 5
-    },
-    {
       "id": 7,
       "userId": 2,
       "pickId": 7
-    },
-    {
-      "id": 8,
-      "userId": 1,
-      "pickId": 8
     },
     {
       "id": 9,
@@ -345,16 +343,6 @@
       "pickId": 9
     },
     {
-      "id": 11,
-      "userId": 3,
-      "pickId": 11
-    },
-    {
-      "id": 12,
-      "userId": 1,
-      "pickId": 11
-    },
-    {
       "id": 13,
       "userId": 2,
       "pickId": 12
@@ -365,9 +353,14 @@
       "pickId": 13
     },
     {
-      "id": 15,
       "userId": 1,
-      "pickId": 3
+      "pickId": 2,
+      "id": 15
+    },
+    {
+      "userId": 1,
+      "pickId": 6,
+      "id": 17
     }
   ]
 }

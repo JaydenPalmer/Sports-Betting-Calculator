@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { getTailsByUserId } from "../../services/tailsService";
+import { deleteTail, getTailsByUserId } from "../../services/tailsService";
 import { getAllPicks } from "../../services/pickService";
+import { Link } from "react-router-dom";
 
 export const FavoritePicks = ({ currentUser }) => {
   const [tails, setTails] = useState([]);
   const [picks, setPicks] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [currentUserTails, setCurrentUserTails] = useState([]);
 
   useEffect(() => {
     getAllPicks().then((picksArray) => {
@@ -13,23 +15,34 @@ export const FavoritePicks = ({ currentUser }) => {
     });
     getTailsByUserId(currentUser).then((userTails) => {
       setTails(userTails);
+      setCurrentUserTails(userTails);
     });
   }, [currentUser]);
 
   useEffect(() => {
-    if (picks.length && tails.length) {
-      // Check if both arrays have data
-      const filteredPicks = picks.filter((pick) =>
-        tails.some((tail) => tail.pickId === pick.id)
-      );
-      setFavorites(filteredPicks);
+    const filteredPicks = picks.filter((pick) =>
+      tails.some((tail) => tail.pickId === pick.id)
+    );
+    setFavorites(filteredPicks);
+  }, [picks, tails, currentUserTails]);
+
+  const handleTailBtn = async (event, pickId) => {
+    event.preventDefault();
+    const tailToDelete = currentUserTails.find(
+      (tail) => tail.pickId === pickId
+    );
+    if (tailToDelete) {
+      await deleteTail(tailToDelete.id);
+      const updatedUserTails = await getTailsByUserId(currentUser);
+      setCurrentUserTails(updatedUserTails);
+      setTails(updatedUserTails);
     }
-  }, [picks, tails]);
+  };
 
   return (
     <div className="picks-container">
       <ul className="picks-grid">
-        {favorites.map((pick) => (
+        {favorites?.map((pick) => (
           <li key={pick.id} className="pick-card">
             <div className="image-container">
               <img
@@ -59,12 +72,12 @@ export const FavoritePicks = ({ currentUser }) => {
               </div>
 
               <footer className="pick-footer">
-                <span className="user-name">{pick.user.name}</span>
+                <Link to={`/userprofile/${pick.userId}`}>
+                  <span className="user-name">{pick.user.name}</span>
+                </Link>
                 <button
                   className="tail-button"
-                  onClick={() => {
-                    // Add untail functionality here
-                  }}
+                  onClick={(event) => handleTailBtn(event, pick.id)}
                 >
                   TRASH
                 </button>

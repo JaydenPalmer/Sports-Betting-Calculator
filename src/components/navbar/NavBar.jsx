@@ -50,6 +50,14 @@ export const NavBar = ({ currentUser }) => {
           </Link>
         </li>
         <li>
+          <Link
+            to={`/userprofile/${currentUser}`}
+            className={location.pathname === "/userprofile" ? "active" : ""}
+          >
+            <span>Profile</span>
+          </Link>
+        </li>
+        <li>
           <Link className="navbar-button" to="" onClick={handleLogout}>
             Logout
           </Link>

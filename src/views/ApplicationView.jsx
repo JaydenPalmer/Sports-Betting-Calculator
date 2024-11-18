@@ -7,6 +7,7 @@ import { MyPicks } from "../components/picks/My Picks";
 import { FavoritePicks } from "../components/picks/FavoritePicks";
 import { EditPick } from "../components/picks/EditPick";
 import { AnimatedBackground } from "../components/animations/background";
+import { UserProfile } from "../components/profile/UserProfile";
 
 export const ApplicationViews = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -22,7 +23,7 @@ export const ApplicationViews = () => {
   const NavBarLayout = () => {
     return (
       <>
-        <NavBar />
+        <NavBar currentUser={currentUser} />
         <AnimatedBackground />
         <Outlet />
       </>
@@ -49,6 +50,7 @@ export const ApplicationViews = () => {
           path="/mypicks/:pickId"
           element={<EditPick currentUser={currentUser} />}
         />
+        <Route path="/userprofile/:userId" element={<UserProfile />} />
       </Route>
     </Routes>
   );

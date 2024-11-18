@@ -19,6 +19,7 @@ export const CreatePick = ({ currentUser }) => {
   const [selectedStat, setSelectedStat] = useState(0);
   const [predictedValue, setPredictedValue] = useState("");
   const [selectedOverUnder, setSelectedOverUnder] = useState(null);
+  const [handleCalc, setHandleCalc] = useState(false);
 
   const [predictedPercentage, setPredictedPercentage] = useState("");
 
@@ -36,20 +37,31 @@ export const CreatePick = ({ currentUser }) => {
     });
   }, []);
 
+  useEffect(() => {
+    setHandleCalc(false);
+  }, [
+    selectedOverUnder,
+    selectedPlayer,
+    selectedPosition,
+    selectedStat,
+    predictedValue,
+  ]);
+
   const handleCalculateBtn = (event) => {
     event.preventDefault();
+    setHandleCalc(true);
     const playerObj = players.find((player) => player.id === selectedPlayer);
     const statObj = stats.find((stat) => stat.id === selectedStat);
 
     if (
       playerObj?.espnId &&
       selectedPosition &&
-      statObj?.name && // Changed this to use statObj
+      statObj?.name &&
       selectedOverUnder &&
       predictedValue
     ) {
       const espnId = playerObj.espnId;
-      const playerStats = statObj.name; // Use the stat name here
+      const playerStats = statObj.name;
       const threshold = predictedValue;
       const overUnder = selectedOverUnder;
 
@@ -203,7 +215,8 @@ export const CreatePick = ({ currentUser }) => {
       selectedPosition &&
       selectedStat &&
       selectedOverUnder &&
-      predictedValue ? (
+      predictedValue &&
+      handleCalc ? (
         <div className="prediction-card">
           <BadhabitsPrediction
             selectedPlayer={Number(selectedPlayer)}

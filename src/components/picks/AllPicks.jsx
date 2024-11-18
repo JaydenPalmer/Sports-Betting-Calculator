@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
-import { deletePick, getAllPicks } from "../../services/pickService";
+import { deletePick, getAllPicks, postPick } from "../../services/pickService";
 import "./AllPicks.css";
-import { getTailsByUserId } from "../../services/tailsService";
-import { useNavigate } from "react-router-dom";
+import {
+  deleteTail,
+  getAllTails,
+  getTailsByUserId,
+  postTail,
+} from "../../services/tailsService";
+import { Link, useNavigate } from "react-router-dom";
 
 export const AllPicks = ({ currentUser }) => {
   const [picks, setPicks] = useState([]);
+  const [allTails, setAllTails] = useState([]);
   const [currentUserTails, setCurrentUserTails] = useState([]);
   const navigate = useNavigate();
 
@@ -13,18 +19,35 @@ export const AllPicks = ({ currentUser }) => {
     getAllPicks().then((picks) => {
       setPicks(picks);
     });
-    getTailsByUserId(currentUser).then((userTails) => {
-      setCurrentUserTails(userTails);
+    getAllTails().then((tails) => {
+      setAllTails(tails);
     });
   }, [currentUser]);
 
-  const handleTailBtn = (event) => {
+  useEffect(() => {
+    getTailsByUserId(currentUser).then((userTails) => {
+      setCurrentUserTails(userTails);
+    });
+  }, [allTails]);
+
+  const handleTailBtn = async (event, pickId) => {
     event.preventDefault();
-    if (event.target.value === "Tail") {
-      console.log("Tail This Pick POST to database");
+    const isTailing = currentUserTails.find((tail) => tail.pickId === pickId);
+
+    if (!isTailing) {
+      const tailToBePosted = {
+        userId: currentUser,
+        pickId: pickId,
+      };
+      await postTail(tailToBePosted);
     } else {
-      console.log("Trash Pick DELETE Tail from database");
+      const tailToDelete = currentUserTails.find(
+        (tail) => tail.pickId === pickId
+      );
+      await deleteTail(tailToDelete.id);
     }
+    const updatedTails = await getAllTails();
+    setAllTails(updatedTails);
   };
 
   const handleEditBtn = (pickId) => {
@@ -73,17 +96,14 @@ export const AllPicks = ({ currentUser }) => {
               </div>
 
               <footer className="pick-footer">
-                <span className="user-name">{pick.user.name}</span>
+                <Link to={`/userprofile/${pick.userId}`}>
+                  <span className="user-name">{pick.user.name}</span>
+                </Link>
                 <div className="button-container">
                   {currentUser !== pick.userId ? (
                     <button
                       className="tail-button"
-                      value={
-                        currentUserTails.find((tail) => tail.pickId === pick.id)
-                          ? "Trash"
-                          : "Tail"
-                      }
-                      onClick={handleTailBtn}
+                      onClick={(event) => handleTailBtn(event, pick.id)}
                     >
                       {currentUserTails.find((tail) => tail.pickId === pick.id)
                         ? "Trash"

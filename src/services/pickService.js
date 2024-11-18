@@ -10,6 +10,12 @@ export const getPickById = (pickId) => {
   );
 };
 
+export const getPicksByUserId = (userId) => {
+  return fetch(`http://localhost:8088/picks?userId=${userId}`).then((res) =>
+    res.json()
+  );
+};
+
 export const updatePick = (pickId, updatedPick) => {
   return fetch(`http://localhost:8088/picks/${pickId}`, {
     method: "PUT",

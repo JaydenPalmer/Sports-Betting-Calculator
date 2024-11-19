@@ -8,19 +8,29 @@ import {
   postTail,
 } from "../../services/tailsService";
 import { Link, useNavigate } from "react-router-dom";
+import { getAllParlays } from "../../services/parlayService";
+import { ParlayDisplay } from "../parlays/ParlayDisplay";
 
 export const AllPicks = ({ currentUser }) => {
   const [picks, setPicks] = useState([]);
+  const [parlays, setParlays] = useState([]);
+  const [parlayDetails, setParlayDetails] = useState([]);
   const [allTails, setAllTails] = useState([]);
   const [currentUserTails, setCurrentUserTails] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     getAllPicks().then((picks) => {
-      setPicks(picks);
+      const notParlay = picks.filter((pick) => pick.parlayId === null);
+      const isParlay = picks.filter((pick) => pick.parlayId);
+      setPicks(notParlay);
+      setParlayDetails(isParlay);
     });
     getAllTails().then((tails) => {
       setAllTails(tails);
+    });
+    getAllParlays().then((p) => {
+      setParlays(p);
     });
   }, [currentUser]);
 
@@ -63,6 +73,15 @@ export const AllPicks = ({ currentUser }) => {
   return (
     <div className="picks-container">
       <ul className="picks-grid">
+        <ParlayDisplay
+          parlays={parlays}
+          parlayDetails={parlayDetails}
+          handleEditBtn={handleEditBtn}
+          handleTailBtn={handleTailBtn}
+          deletePickBtn={deletePickBtn}
+          currentUser={currentUser}
+          currentUserTails={currentUserTails}
+        />
         {picks.map((pick) => (
           <li key={pick.id} className="pick-card">
             <div className="image-container">
@@ -89,7 +108,7 @@ export const AllPicks = ({ currentUser }) => {
               </h2>
 
               <div className="prediction-section">
-                <h3 className="prediction-label">Badhabits' Prediction</h3>
+                <h3 className="prediction-label">Badhabits' Pick Prediction</h3>
                 <h3 className="prediction-value">
                   {pick.predictedPercentage}%
                 </h3>

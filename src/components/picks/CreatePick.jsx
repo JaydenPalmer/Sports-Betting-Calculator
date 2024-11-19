@@ -10,7 +10,7 @@ import { postPick } from "../../services/pickService";
 import { useNavigate } from "react-router-dom";
 import { PickForm } from "./PickForm";
 import { ParlayOrPick } from "./ParlayOrPick";
-import { getAllParlays } from "../../services/parlayService";
+import { getAllParlays, postParlay } from "../../services/parlayService";
 import { ParlayCart } from "../parlays/ParlayCart";
 
 export const CreatePick = ({ currentUser }) => {
@@ -34,6 +34,7 @@ export const CreatePick = ({ currentUser }) => {
 
   //parlay state to display
   const [currentParlay, setCurrentParlay] = useState([]);
+  const [parlayPercentage, setParlayPercentage] = useState([]);
 
   const navigate = useNavigate();
 
@@ -130,7 +131,6 @@ export const CreatePick = ({ currentUser }) => {
       selectedOverUnder &&
       predictedValue
     ) {
-      const parlayId = parlayYesNo === "Parlay" ? parlays.length + 1 : null;
       const pickObj = {
         userId: currentUser,
         statId: selectedStat,
@@ -138,7 +138,6 @@ export const CreatePick = ({ currentUser }) => {
         predictedValue: predictedValue,
         isOver: selectedOverUnder === "Over" ? true : false,
         predictedPercentage: predictedPercentage,
-        parlayId: parlayId,
       };
       console.log(pickObj);
       setCurrentParlay((prevParlay) => [...prevParlay, pickObj]);
@@ -153,8 +152,15 @@ export const CreatePick = ({ currentUser }) => {
 
   const handlePostParlayBtn = (event) => {
     event.preventDefault();
-    if (currentParlay > 1) {
-      console.log(currentParlay);
+    if (currentParlay.length > 1) {
+      postParlay(currentParlay, parlayPercentage)
+        .then(() => {
+          navigate("/");
+        })
+        .catch((error) => {
+          console.error("Error posting parlay:", error);
+          window.alert("Failed to submit parlay");
+        });
     } else {
       window.alert("A PARLAY MUST HAVE MORE THAN 1 PICK");
     }
@@ -197,9 +203,12 @@ export const CreatePick = ({ currentUser }) => {
       ) : null}
 
       {currentParlay.length > 0 ? (
-        <div>
+        <div className="parlay-container">
           {" "}
-          <ParlayCart parlays={currentParlay} />{" "}
+          <ParlayCart
+            parlays={currentParlay}
+            setParlayPercentage={setParlayPercentage}
+          />{" "}
           <button
             type="button"
             className="btn btn-primary btn-lg btn-block"

@@ -65,7 +65,7 @@ export const FavoritePicks = ({ currentUser }) => {
               </h2>
 
               <div className="prediction-section">
-                <h3 className="prediction-label">Badhabits' Prediction</h3>
+                <h3 className="prediction-label">Badhabits' Pick Prediction</h3>
                 <h3 className="prediction-value">
                   {pick.predictedPercentage}%
                 </h3>

@@ -3,7 +3,7 @@ import { getStatById } from "../../services/statService";
 import { getPlayerById } from "../../services/playerService";
 import "./ParlayCart.css";
 
-export const ParlayCart = ({ parlays }) => {
+export const ParlayCart = ({ parlays, setParlayPercentage }) => {
   const [players, setPlayers] = useState({});
   const [stats, setStats] = useState({});
 
@@ -14,6 +14,10 @@ export const ParlayCart = ({ parlays }) => {
       1
     ) * 100
   );
+
+  useEffect(() => {
+    setParlayPercentage(parlayPercentage);
+  }, [parlays]);
 
   useEffect(() => {
     const uniquePlayerIds = [...new Set(parlays.map((pick) => pick.playerId))];
@@ -35,7 +39,7 @@ export const ParlayCart = ({ parlays }) => {
   return (
     <>
       {parlays.length > 0 ? (
-        <div className="parlay-container">
+        <div>
           <h2 className="parlay-title">Bad Habits' Parlay</h2>
           <h2 className="parlay-main-percentage">{parlayPercentage}% Chance</h2>
           <div className="parlay-picks-container">

@@ -1,0 +1,194 @@
+.parlay-main-card {
+  background: linear-gradient(145deg, #1a2b4d, #2a4173);
+  border-radius: 20px;
+  padding: 2rem;
+  color: #ffffff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.parlay-header {
+  font-size: 1.5rem;
+  color: #94a3b8;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.parlay-total-percentage {
+  font-size: 2.5rem;
+  color: #3b82f6;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: bold;
+  text-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+.parlay-picks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.parlay-single-pick {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 0.75rem;
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s;
+}
+
+.parlay-single-pick:hover {
+  transform: translateX(5px);
+}
+
+.parlay-player-image-container {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  margin-right: 1rem;
+}
+
+.parlay-player-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.parlay-pick-info-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.parlay-player-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+}
+
+.parlay-pick-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.parlay-over-text {
+  color: #10b981;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.parlay-under-text {
+  color: #ef4444;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.parlay-prediction-container {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.parlay-prediction-number {
+  font-size: 1.25rem;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.parlay-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.parlay-username {
+  color: #e2e8f0;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.parlay-button-container {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.parlay-tail-button,
+.parlay-edit-button,
+.parlay-delete-button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.parlay-tail-button {
+  background: linear-gradient(45deg, #3b82f6, #60a5fa);
+  color: white;
+}
+
+.parlay-edit-button {
+  background: linear-gradient(45deg, #10b981, #34d399);
+  color: white;
+}
+
+.parlay-delete-button {
+  background: linear-gradient(45deg, #ef4444, #f87171);
+  color: white;
+}
+
+.parlay-tail-button:hover,
+.parlay-edit-button:hover,
+.parlay-delete-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.parlay-tail-button:active,
+.parlay-edit-button:active,
+.parlay-delete-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Add this cool shine effect on hover */
+.parlay-tail-button::after,
+.parlay-edit-button::after,
+.parlay-delete-button::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.05)
+  );
+  transform: rotate(45deg);
+  transition: 0.5s;
+  opacity: 0;
+}
+
+.parlay-tail-button:hover::after,
+.parlay-edit-button:hover::after,
+.parlay-delete-button:hover::after {
+  opacity: 1;
+}

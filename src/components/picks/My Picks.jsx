@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { deletePick, getAllPicks } from "../../services/pickService";
 import { useNavigate } from "react-router-dom";
+import { ParlayDisplay } from "../parlays/ParlayDisplay";
+import { getAllParlays } from "../../services/parlayService";
 
 export const MyPicks = ({ currentUser }) => {
   const [picks, setPicks] = useState([]);
+  const [parlays, setParlays] = useState([]);
+  const [parlayDetails, setParlayDetails] = useState([]);
 
   const navigate = useNavigate();
 
@@ -12,7 +16,13 @@ export const MyPicks = ({ currentUser }) => {
       const filteredPicks = allPicks.filter(
         (pick) => pick.userId === currentUser
       );
-      setPicks(filteredPicks);
+      const notParlay = filteredPicks.filter((pick) => pick.parlayId === null);
+      const isParlay = filteredPicks.filter((pick) => pick.parlayId);
+      setPicks(notParlay);
+      setParlayDetails(isParlay);
+    });
+    getAllParlays().then((p) => {
+      setParlays(p);
     });
   }, [currentUser]);
 
@@ -27,7 +37,12 @@ export const MyPicks = ({ currentUser }) => {
         const filteredPicks = allPicks.filter(
           (pick) => pick.userId === currentUser
         );
-        setPicks(filteredPicks);
+        const notParlay = filteredPicks.filter(
+          (pick) => pick.parlayId === null
+        );
+        const isParlay = filteredPicks.filter((pick) => pick.parlayId);
+        setPicks(notParlay);
+        setParlayDetails(isParlay);
       });
     });
   };
@@ -35,6 +50,13 @@ export const MyPicks = ({ currentUser }) => {
   return (
     <div className="picks-container">
       <ul className="picks-grid">
+        <ParlayDisplay
+          parlays={parlays}
+          parlayDetails={parlayDetails}
+          handleEditBtn={handleEditBtn}
+          deletePickBtn={deletePickBtn}
+          currentUser={currentUser}
+        />
         {picks.map((pick) => (
           <li key={pick.id} className="pick-card">
             <div className="image-container">
@@ -61,7 +83,7 @@ export const MyPicks = ({ currentUser }) => {
               </h2>
 
               <div className="prediction-section">
-                <h3 className="prediction-label">Badhabits' Prediction</h3>
+                <h3 className="prediction-label">Badhabits' Pick Prediction</h3>
                 <h3 className="prediction-value">
                   {pick.predictedPercentage}%
                 </h3>

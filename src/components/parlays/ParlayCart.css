@@ -1,0 +1,134 @@
+.parlay-container {
+  padding: 2rem;
+  background: linear-gradient(145deg, #1a2b4d, #2a4173);
+  border-radius: 20px;
+  color: #ffffff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.parlay-title {
+  color: #94a3b8;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.parlay-main-percentage {
+  font-size: 4.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 2rem 0;
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+  position: relative;
+}
+
+.parlay-main-percentage::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 4px;
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  border-radius: 2px;
+}
+
+.parlay-picks-container {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.parlay-pick-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s;
+}
+
+.parlay-pick-card:hover {
+  transform: translateX(5px);
+}
+
+.parlay-player-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.parlay-pick-details {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #94a3b8;
+}
+
+.parlay-pick-percentage {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #3b82f6;
+  margin-top: 0.5rem;
+  text-align: right;
+}
+
+.empty-parlay {
+  text-align: center;
+  padding: 3rem;
+  color: #94a3b8;
+  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+/* Scrollbar styling */
+.parlay-picks-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.parlay-picks-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.parlay-picks-container::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.5);
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .parlay-main-percentage {
+    font-size: 3.5rem;
+  }
+
+  .parlay-pick-card {
+    padding: 0.75rem;
+  }
+
+  .parlay-player-name {
+    font-size: 1rem;
+  }
+
+  .parlay-pick-details {
+    font-size: 0.875rem;
+  }
+
+  .parlay-pick-percentage {
+    font-size: 1.25rem;
+  }
+}

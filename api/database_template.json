@@ -165,7 +165,8 @@
       "playerId": 1,
       "predictedValue": 285.5,
       "isOver": true,
-      "predictedPercentage": 64
+      "predictedPercentage": 64,
+      "parlayId": null
     },
     {
       "id": 2,
@@ -174,7 +175,8 @@
       "playerId": 2,
       "predictedValue": 1.5,
       "isOver": true,
-      "predictedPercentage": 69
+      "predictedPercentage": 69,
+      "parlayId": null
     },
     {
       "id": 3,
@@ -183,7 +185,8 @@
       "playerId": 6,
       "predictedValue": 62.5,
       "isOver": true,
-      "predictedPercentage": 75
+      "predictedPercentage": 75,
+      "parlayId": null
     },
     {
       "id": 4,
@@ -192,7 +195,8 @@
       "playerId": 10,
       "predictedValue": 267.5,
       "isOver": true,
-      "predictedPercentage": 58
+      "predictedPercentage": 58,
+      "parlayId": null
     },
     {
       "id": 5,
@@ -201,7 +205,8 @@
       "playerId": 5,
       "predictedValue": 0.5,
       "isOver": false,
-      "predictedPercentage": 71
+      "predictedPercentage": 71,
+      "parlayId": null
     },
     {
       "id": 6,
@@ -210,7 +215,8 @@
       "playerId": 9,
       "predictedValue": 1.5,
       "isOver": true,
-      "predictedPercentage": 61
+      "predictedPercentage": 61,
+      "parlayId": null
     },
     {
       "id": 7,
@@ -219,7 +225,8 @@
       "playerId": 8,
       "predictedValue": 0.5,
       "isOver": false,
-      "predictedPercentage": 68
+      "predictedPercentage": 68,
+      "parlayId": null
     },
     {
       "id": 8,
@@ -228,7 +235,8 @@
       "playerId": 7,
       "predictedValue": 242.5,
       "isOver": false,
-      "predictedPercentage": 66
+      "predictedPercentage": 66,
+      "parlayId": null
     },
     {
       "id": 9,
@@ -237,7 +245,8 @@
       "playerId": 2,
       "predictedValue": 42.5,
       "isOver": true,
-      "predictedPercentage": 63
+      "predictedPercentage": 63,
+      "parlayId": null
     },
     {
       "id": 10,
@@ -246,7 +255,8 @@
       "playerId": 4,
       "predictedValue": 0.5,
       "isOver": false,
-      "predictedPercentage": 57
+      "predictedPercentage": 57,
+      "parlayId": null
     },
     {
       "id": 11,
@@ -255,7 +265,8 @@
       "playerId": 1,
       "predictedValue": 2.5,
       "isOver": true,
-      "predictedPercentage": 71
+      "predictedPercentage": 71,
+      "parlayId": null
     },
     {
       "id": 12,
@@ -264,7 +275,8 @@
       "playerId": 6,
       "predictedValue": 0.5,
       "isOver": true,
-      "predictedPercentage": 65
+      "predictedPercentage": 65,
+      "parlayId": 1
     },
     {
       "id": 13,
@@ -273,24 +285,15 @@
       "playerId": 5,
       "predictedValue": 277.5,
       "isOver": false,
-      "predictedPercentage": 55
+      "predictedPercentage": 55,
+      "parlayId": 1
     }
   ],
   "parlays": [
     {
       "id": 1,
-      "pickId": 1,
-      "predictedPercentage": 85
-    },
-    {
-      "id": 2,
-      "pickId": 2,
-      "predictedPercentage": 72
-    },
-    {
-      "id": 3,
-      "pickId": 3,
-      "predictedPercentage": 90
+      "userId": 1,
+      "predictedPercentage": 35
     }
   ],
 

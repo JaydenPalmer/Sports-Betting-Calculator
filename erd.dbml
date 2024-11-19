@@ -1,0 +1,55 @@
+Table players {
+  id integer [pk]
+  name varchar
+  profilePic varchar
+  team varchar
+  positionId integer [ref: > positions.id]
+  height varchar
+  espnId varchar
+}
+
+Table positions {
+  id integer [pk]
+  name varchar
+}
+
+Table stats {
+  id integer [pk]
+  name varchar
+}
+
+Table positionStats {
+  id integer [pk]
+  statId integer [ref: > stats.id]
+  positionId integer [ref: > positions.id]
+}
+
+Table users {
+  id integer [pk]
+  name varchar
+  email varchar
+  password varchar
+}
+
+Table picks {
+  id integer [pk]
+  userId integer [ref: > users.id]
+  statId integer [ref: > stats.id]
+  playerId integer [ref: > players.id]
+  predictedValue decimal
+  isOver boolean
+  predictedPercentage integer
+  parlayId integer [ref: > parlays.id]
+}
+
+Table parlays {
+  id integer [pk]
+  userId integer [ref: > users.id]
+  predictedPercentage integer
+}
+
+Table tails {
+  id integer [pk]
+  userId integer [ref: > users.id]
+  pickId integer [ref: > picks.id]
+}

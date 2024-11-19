@@ -24,7 +24,7 @@ export const ApplicationViews = () => {
     return (
       <>
         <NavBar currentUser={currentUser} />
-        <AnimatedBackground />
+        {/*<AnimatedBackground />*/}
         <Outlet />
       </>
     );

@@ -4,38 +4,72 @@ import { getAllPicks } from "../../services/pickService";
 import { Link } from "react-router-dom";
 
 export const FavoritePicks = ({ currentUser }) => {
-  const [tails, setTails] = useState([]);
-  const [picks, setPicks] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [currentUserTails, setCurrentUserTails] = useState([]);
 
+  // Initial load
   useEffect(() => {
-    getAllPicks().then((picksArray) => {
-      setPicks(picksArray);
-    });
-    getTailsByUserId(currentUser).then((userTails) => {
-      setTails(userTails);
+    Promise.all([
+      fetch(
+        "http://localhost:8088/picks?_expand=player&_expand=stat&_expand=user"
+      ).then((res) => res.json()),
+      fetch(`http://localhost:8088/tails?userId=${currentUser}`).then((res) =>
+        res.json()
+      ),
+    ]).then(([allPicks, userTails]) => {
+      const filteredPicks = allPicks.filter((pick) =>
+        userTails.some((tail) => tail.pickId === pick.id)
+      );
+      setFavorites(filteredPicks);
       setCurrentUserTails(userTails);
     });
   }, [currentUser]);
 
-  useEffect(() => {
-    const filteredPicks = picks.filter((pick) =>
-      tails.some((tail) => tail.pickId === pick.id)
-    );
-    setFavorites(filteredPicks);
-  }, [picks, tails, currentUserTails]);
-
   const handleTailBtn = async (event, pickId) => {
     event.preventDefault();
-    const tailToDelete = currentUserTails.find(
-      (tail) => tail.pickId === pickId
-    );
-    if (tailToDelete) {
-      await deleteTail(tailToDelete.id);
-      const updatedUserTails = await getTailsByUserId(currentUser);
-      setCurrentUserTails(updatedUserTails);
-      setTails(updatedUserTails);
+
+    try {
+      // Find the specific tail
+      const tailToDelete = currentUserTails.find(
+        (tail) =>
+          tail.pickId === pickId && tail.userId === parseInt(currentUser)
+      );
+
+      if (tailToDelete) {
+        // Only make the delete request
+        const deleteResponse = await fetch(
+          `http://localhost:8088/tails/${tailToDelete.id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (!deleteResponse.ok) {
+          throw new Error("Failed to delete tail");
+        }
+
+        // Only get tails for current user
+        const newTailsResponse = await fetch(
+          `http://localhost:8088/tails?userId=${currentUser}`
+        );
+        const newTails = await newTailsResponse.json();
+
+        // Get all picks again
+        const newPicksResponse = await fetch(
+          "http://localhost:8088/picks?_expand=player&_expand=stat&_expand=user"
+        );
+        const allPicks = await newPicksResponse.json();
+
+        // Filter favorites based on new tails
+        const newFavorites = allPicks.filter((pick) =>
+          newTails.some((tail) => tail.pickId === pick.id)
+        );
+
+        setCurrentUserTails(newTails);
+        setFavorites(newFavorites);
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 

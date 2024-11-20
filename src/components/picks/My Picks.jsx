@@ -12,17 +12,27 @@ export const MyPicks = ({ currentUser }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Get all picks first
     getAllPicks().then((allPicks) => {
       const filteredPicks = allPicks.filter(
-        (pick) => pick.userId === currentUser
+        (pick) => pick.userId === parseInt(currentUser)
       );
-      const notParlay = filteredPicks.filter((pick) => pick.parlayId === null);
-      const isParlay = filteredPicks.filter((pick) => pick.parlayId);
+      // Look for picks with parlayId > 0
+      const isParlay = filteredPicks.filter((pick) => pick.parlayId > 0);
+      // Use explicit comparison for non-parlay picks
+      const notParlay = filteredPicks.filter(
+        (pick) => pick.parlayId === 0 || pick.parlayId === null
+      );
       setPicks(notParlay);
       setParlayDetails(isParlay);
     });
-    getAllParlays().then((p) => {
-      setParlays(p);
+
+    // Get and filter parlays by current user
+    getAllParlays().then((allParlays) => {
+      const filteredParlays = allParlays.filter(
+        (parlay) => parlay.userId === parseInt(currentUser)
+      );
+      setParlays(filteredParlays);
     });
   }, [currentUser]);
 
@@ -32,15 +42,15 @@ export const MyPicks = ({ currentUser }) => {
   };
 
   const deletePickBtn = (event) => {
-    deletePick(event.target.value).then(() => {
+    deletePick(parseInt(event.target.value)).then(() => {
       getAllPicks().then((allPicks) => {
         const filteredPicks = allPicks.filter(
-          (pick) => pick.userId === currentUser
+          (pick) => pick.userId === parseInt(currentUser)
         );
         const notParlay = filteredPicks.filter(
-          (pick) => pick.parlayId === null
+          (pick) => pick.parlayId === 0 || pick.parlayId === null
         );
-        const isParlay = filteredPicks.filter((pick) => pick.parlayId);
+        const isParlay = filteredPicks.filter((pick) => pick.parlayId > 0);
         setPicks(notParlay);
         setParlayDetails(isParlay);
       });
@@ -50,13 +60,15 @@ export const MyPicks = ({ currentUser }) => {
   return (
     <div className="picks-container">
       <ul className="picks-grid">
-        <ParlayDisplay
-          parlays={parlays}
-          parlayDetails={parlayDetails}
-          handleEditBtn={handleEditBtn}
-          deletePickBtn={deletePickBtn}
-          currentUser={currentUser}
-        />
+        {
+          <ParlayDisplay
+            parlays={parlays}
+            parlayDetails={parlayDetails}
+            handleEditBtn={handleEditBtn}
+            deletePickBtn={deletePickBtn}
+            currentUser={currentUser}
+          />
+        }
         {picks.map((pick) => (
           <li key={pick.id} className="pick-card">
             <div className="image-container">

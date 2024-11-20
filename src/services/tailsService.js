@@ -19,10 +19,15 @@ export const postTail = (tail) => {
 };
 
 export const deleteTail = (tailId) => {
+  console.log("DELETE TAIL CALLED WITH ID:", tailId);
   return fetch(`http://localhost:8088/tails/${tailId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Delete failed");
+    }
   });
 };

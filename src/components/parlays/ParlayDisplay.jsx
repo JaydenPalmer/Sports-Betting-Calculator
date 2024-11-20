@@ -66,7 +66,7 @@ export const ParlayDisplay = ({
                 </span>
               </Link>
               <div className="parlay-button-container">
-                {currentUser !== parlay.userId ? (
+                {parseInt(currentUser) !== parlay.userId ? (
                   <button
                     className="parlay-tail-button"
                     onClick={(event) => handleTailBtn(event, parlay.id)}

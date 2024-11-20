@@ -85,12 +85,13 @@ export const EditPick = ({ currentUser }) => {
       predictedValue
     ) {
       const pickObj = {
-        userId: currentUser,
-        statId: selectedStat,
-        playerId: selectedPlayer,
-        predictedValue: predictedValue,
+        userId: parseInt(currentUser),
+        statId: parseInt(selectedStat),
+        playerId: parseInt(selectedPlayer),
+        predictedValue: parseFloat(predictedValue),
         isOver: selectedOverUnder === "Over",
-        predictedPercentage: predictedPercentage,
+        predictedPercentage: parseInt(predictedPercentage),
+        parlayId: parseInt(currentPick.parlayId),
       };
 
       updatePick(pickId, pickObj).then(() => navigate("/mypicks"));

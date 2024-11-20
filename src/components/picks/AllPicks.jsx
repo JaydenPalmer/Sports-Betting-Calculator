@@ -21,8 +21,12 @@ export const AllPicks = ({ currentUser }) => {
 
   useEffect(() => {
     getAllPicks().then((picks) => {
-      const notParlay = picks.filter((pick) => pick.parlayId === null);
-      const isParlay = picks.filter((pick) => pick.parlayId);
+      // Use explicit comparison for zero
+      const notParlay = picks.filter(
+        (pick) => pick.parlayId === 0 || pick.parlayId === null
+      );
+      // Look for picks with parlayId > 0
+      const isParlay = picks.filter((pick) => pick.parlayId > 0);
       setPicks(notParlay);
       setParlayDetails(isParlay);
     });
@@ -35,7 +39,7 @@ export const AllPicks = ({ currentUser }) => {
   }, [currentUser]);
 
   useEffect(() => {
-    getTailsByUserId(currentUser).then((userTails) => {
+    getTailsByUserId(parseInt(currentUser)).then((userTails) => {
       setCurrentUserTails(userTails);
     });
   }, [allTails]);
@@ -46,8 +50,8 @@ export const AllPicks = ({ currentUser }) => {
 
     if (!isTailing) {
       const tailToBePosted = {
-        userId: currentUser,
-        pickId: pickId,
+        userId: parseInt(currentUser),
+        pickId: parseInt(pickId),
       };
       await postTail(tailToBePosted);
     } else {
@@ -65,7 +69,7 @@ export const AllPicks = ({ currentUser }) => {
   };
 
   const deletePickBtn = (event) => {
-    deletePick(event.target.value).then(() => {
+    deletePick(parseInt(event.target.value)).then(() => {
       getAllPicks().then(setPicks);
     });
   };
@@ -119,7 +123,7 @@ export const AllPicks = ({ currentUser }) => {
                   <span className="user-name">{pick.user.name}</span>
                 </Link>
                 <div className="button-container">
-                  {currentUser !== pick.userId ? (
+                  {parseInt(currentUser) !== pick.userId ? (
                     <button
                       className="tail-button"
                       onClick={(event) => handleTailBtn(event, pick.id)}

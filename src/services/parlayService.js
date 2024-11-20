@@ -23,7 +23,7 @@ export const postParlay = async (picks, parlayPercentage) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...pick,
-        parlayId: parlayResponse.id,
+        parlayId: parseInt(parlayResponse.id),
       }),
     });
   });

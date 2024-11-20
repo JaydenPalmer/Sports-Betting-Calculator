@@ -73,7 +73,7 @@ export const PickForm = ({
             className="form-input"
             placeholder="ex. 199.5"
             value={predictedValue}
-            onChange={(e) => setPredictedValue(e.target.value)}
+            onChange={(e) => setPredictedValue(parseFloat(e.target.value))}
           />
         </fieldset>
 

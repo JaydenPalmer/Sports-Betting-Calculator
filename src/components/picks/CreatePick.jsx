@@ -104,12 +104,13 @@ export const CreatePick = ({ currentUser }) => {
       predictedValue
     ) {
       const pickObj = {
-        userId: currentUser,
-        statId: selectedStat,
-        playerId: selectedPlayer,
-        predictedValue: predictedValue,
+        userId: parseInt(currentUser),
+        statId: parseInt(selectedStat),
+        playerId: parseInt(selectedPlayer),
+        predictedValue: parseFloat(predictedValue),
         isOver: selectedOverUnder === "Over" ? true : false,
-        predictedPercentage: predictedPercentage,
+        predictedPercentage: parseInt(predictedPercentage),
+        parlayId: 0,
       };
 
       postPick(pickObj)
@@ -132,12 +133,12 @@ export const CreatePick = ({ currentUser }) => {
       predictedValue
     ) {
       const pickObj = {
-        userId: currentUser,
-        statId: selectedStat,
-        playerId: selectedPlayer,
-        predictedValue: predictedValue,
+        userId: parseInt(currentUser),
+        statId: parseInt(selectedStat),
+        playerId: parseInt(selectedPlayer),
+        predictedValue: parseFloat(predictedValue),
         isOver: selectedOverUnder === "Over" ? true : false,
-        predictedPercentage: predictedPercentage,
+        predictedPercentage: parseInt(predictedPercentage),
       };
       console.log(pickObj);
       setCurrentParlay((prevParlay) => [...prevParlay, pickObj]);

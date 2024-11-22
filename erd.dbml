@@ -1,55 +1,66 @@
+Table users {
+ id integer [primary key]
+ name varchar
+ email varchar
+ password varchar
+}
+
 Table players {
-  id integer [pk]
-  name varchar
-  profilePic varchar
-  team varchar
-  positionId integer [ref: > positions.id]
-  height varchar
-  espnId varchar
+ id integer [primary key]
+ name varchar
+ profilePic varchar
+ team varchar
+ positionId integer [ref: > positions.id]
+ height varchar
+ espnId varchar
 }
 
 Table positions {
-  id integer [pk]
-  name varchar
+ id integer [primary key]
+ name varchar
 }
 
 Table stats {
-  id integer [pk]
-  name varchar
+ id integer [primary key]
+ name varchar
 }
 
 Table positionStats {
-  id integer [pk]
-  statId integer [ref: > stats.id]
-  positionId integer [ref: > positions.id]
-}
-
-Table users {
-  id integer [pk]
-  name varchar
-  email varchar
-  password varchar
+ id integer [primary key]
+ statId integer [ref: > stats.id]
+ positionId integer [ref: > positions.id]
 }
 
 Table picks {
-  id integer [pk]
-  userId integer [ref: > users.id]
-  statId integer [ref: > stats.id]
-  playerId integer [ref: > players.id]
-  predictedValue decimal
-  isOver boolean
-  predictedPercentage integer
-  parlayId integer [ref: > parlays.id]
+ id integer [primary key]
+ userId integer [ref: > users.id]
+ statId integer [ref: > stats.id]
+ playerId integer [ref: > players.id]
+ predictedValue decimal
+ isOver boolean
+ predictedPercentage integer
 }
 
 Table parlays {
-  id integer [pk]
-  userId integer [ref: > users.id]
-  predictedPercentage integer
+ id integer [primary key]
+ userId integer [ref: > users.id]
+ predictedPercentage integer
+ pickIds integer[]
 }
 
 Table tails {
-  id integer [pk]
-  userId integer [ref: > users.id]
-  pickId integer [ref: > picks.id]
+ id integer [primary key]
+ userId integer [ref: > users.id]
+ pickId integer [ref: > picks.id]
 }
+
+Ref: parlays.pickIds > picks.id
+Ref: stats.id < positionStats.statId
+Ref: positions.id < positionStats.positionId
+Ref: positions.id < players.positionId
+Ref: users.id < picks.userId
+Ref: stats.id < picks.statId
+Ref: players.id < picks.playerId
+Ref: users.id < parlays.userId
+Ref: users.id < tails.userId
+Ref: picks.id < tails.pickId

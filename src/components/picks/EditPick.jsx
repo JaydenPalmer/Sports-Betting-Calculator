@@ -84,6 +84,7 @@ export const EditPick = ({ currentUser }) => {
 
   const handleUpdatePickBtn = (event) => {
     event.preventDefault();
+    console.log("Updating pick with ID:", pickId); // Add this
     if (
       selectedPlayer &&
       selectedPosition &&
@@ -92,6 +93,7 @@ export const EditPick = ({ currentUser }) => {
       predictedValue
     ) {
       const pickObj = {
+        id: parseInt(pickId), // Make sure the ID is included
         userId: parseInt(currentUser),
         statId: parseInt(selectedStat),
         playerId: parseInt(selectedPlayer),
@@ -99,6 +101,8 @@ export const EditPick = ({ currentUser }) => {
         isOver: selectedOverUnder === "Over",
         predictedPercentage: parseInt(predictedPercentage),
       };
+
+      console.log("Update pick object:", pickObj); // Add this
 
       updatePick(pickId, pickObj).then(() => {
         if (parlayId) {

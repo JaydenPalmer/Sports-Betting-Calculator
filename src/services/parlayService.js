@@ -44,3 +44,13 @@ export const deleteParlay = async (parlayId, pickIds) => {
     method: "DELETE",
   });
 };
+
+export const updateParlay = async (parlayId, parlay) => {
+  return fetch(`http://localhost:8088/parlays/${parlayId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(parlay),
+  });
+};

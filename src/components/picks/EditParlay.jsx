@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { getAllPicks } from "../../services/pickService";
 import { getAllParlays } from "../../services/parlayService";
+import { updateParlay } from "../../services/parlayService";
+import "./EditParlay.css";
 
 export const EditParlay = ({ currentUser }) => {
   const { parlayId } = useParams();
   const [parlays, setParlays] = useState([]);
   const [parlayDetails, setParlayDetails] = useState([]);
+  const [isUpdatingPercentage, setIsUpdatingPercentage] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +30,40 @@ export const EditParlay = ({ currentUser }) => {
       }
     );
   }, [parlayId, currentUser]);
+
+  useEffect(() => {
+    if (
+      parlayDetails.length > 0 &&
+      parlays.length > 0 &&
+      !isUpdatingPercentage
+    ) {
+      setIsUpdatingPercentage(true);
+
+      // Calculate new percentage based on all picks
+      const totalPercentage = parlayDetails.reduce((acc, pick) => {
+        return acc + pick.predictedPercentage;
+      }, 0);
+
+      const averagePercentage = Math.round(
+        totalPercentage / parlayDetails.length
+      );
+
+      // Create updated parlay object
+      const updatedParlay = {
+        ...parlays[0],
+        predictedPercentage: averagePercentage,
+      };
+
+      // Update parlay in database
+      updateParlay(parlayId, updatedParlay)
+        .then(() => {
+          setParlays([updatedParlay]);
+        })
+        .finally(() => {
+          setIsUpdatingPercentage(false);
+        });
+    }
+  }, [parlayDetails]);
 
   const handleDoneUpdating = (event) => {
     event.preventDefault();

@@ -227,7 +227,7 @@
       "playerId": 5,
       "predictedValue": 1.5,
       "isOver": true,
-      "predictedPercentage": 77,
+      "predictedPercentage": 62,
       "id": 18
     },
     {
@@ -235,8 +235,8 @@
       "statId": 3,
       "playerId": 6,
       "predictedValue": 55.5,
-      "isOver": true,
-      "predictedPercentage": 84,
+      "isOver": false,
+      "predictedPercentage": 45,
       "id": 19
     },
     {
@@ -247,6 +247,15 @@
       "isOver": false,
       "predictedPercentage": 69,
       "id": 20
+    },
+    {
+      "userId": 1,
+      "statId": 5,
+      "playerId": 8,
+      "predictedValue": 0.5,
+      "isOver": false,
+      "predictedPercentage": 39,
+      "id": 21
     }
   ],
   "parlays": [

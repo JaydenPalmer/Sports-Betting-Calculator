@@ -5,7 +5,7 @@ export const ParlayDisplay = ({
   parlays,
   parlayDetails,
   handleTailBtn,
-  handleEditBtn,
+  handleEditParlayBtn,
   deleteParlayBtn,
   currentUser,
   currentUserTails,
@@ -79,7 +79,8 @@ export const ParlayDisplay = ({
                   <>
                     <button
                       className="parlay-edit-button"
-                      onClick={() => handleEditBtn(parlay.id)}
+                      value={parlay.id}
+                      onClick={handleEditParlayBtn}
                     >
                       Edit
                     </button>

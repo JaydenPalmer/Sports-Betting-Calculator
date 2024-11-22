@@ -7,6 +7,7 @@ import { getStats } from "../../services/statService";
 import "./CreatePick.css";
 import { PlayerProfile } from "./PlayerProfile";
 import { BadhabitsPrediction } from "./BadHabitsPrediction";
+import { getAllParlays } from "../../services/parlayService";
 
 export const EditPick = ({ currentUser }) => {
   const { pickId } = useParams();
@@ -14,6 +15,7 @@ export const EditPick = ({ currentUser }) => {
   const [players, setPlayers] = useState([]);
   const [stats, setStats] = useState([]);
   const [positons, setPositions] = useState([]);
+  const [parlayId, setParlayId] = useState(null);
 
   const [selectedPosition, setSelectedPosition] = useState(0);
   const [selectedPlayer, setSelectedPlayer] = useState(0);
@@ -25,23 +27,28 @@ export const EditPick = ({ currentUser }) => {
   const [currentPick, setCurrentPick] = useState([]);
 
   useEffect(() => {
-    getPlayers().then((p) => {
+    Promise.all([
+      getPlayers(),
+      getPositions(),
+      getStats(),
+      getPickById(pickId),
+      getAllParlays(),
+    ]).then(([p, pos, s, pick, parlays]) => {
       setPlayers(p);
-    });
-    getPositions().then((p) => {
-      setPositions(p);
-    });
-    getStats().then((s) => {
+      setPositions(pos);
       setStats(s);
-    });
-    getPickById(pickId).then((p) => {
-      setCurrentPick(p);
-      setSelectedPlayer(p.playerId);
+      setCurrentPick(pick);
+      setSelectedPlayer(pick.playerId);
       setSelectedPosition(1);
-      setSelectedStat(p.statId);
-      setPredictedValue(p.predictedValue);
-      setPredictedPercentage(p.predictedPercentage);
-      setSelectedOverUnder(p.isOver ? "Over" : "Under");
+      setSelectedStat(pick.statId);
+      setPredictedValue(pick.predictedValue);
+      setPredictedPercentage(pick.predictedPercentage);
+      setSelectedOverUnder(pick.isOver ? "Over" : "Under");
+
+      const parlay = parlays.find((p) => p.pickIds.includes(Number(pickId)));
+      if (parlay) {
+        setParlayId(parlay.id);
+      }
     });
   }, []);
 
@@ -53,12 +60,12 @@ export const EditPick = ({ currentUser }) => {
     if (
       playerObj?.espnId &&
       selectedPosition &&
-      statObj?.name && // Changed this to use statObj
+      statObj?.name &&
       selectedOverUnder &&
       predictedValue
     ) {
       const espnId = playerObj.espnId;
-      const playerStats = statObj.name; // Use the stat name here
+      const playerStats = statObj.name;
       const threshold = predictedValue;
       const overUnder = selectedOverUnder;
 
@@ -93,7 +100,13 @@ export const EditPick = ({ currentUser }) => {
         predictedPercentage: parseInt(predictedPercentage),
       };
 
-      updatePick(pickId, pickObj).then(() => navigate("/mypicks"));
+      updatePick(pickId, pickObj).then(() => {
+        if (parlayId) {
+          navigate(`/mypicks/parlay/${parlayId}`);
+        } else {
+          navigate("/mypicks");
+        }
+      });
     } else {
       window.alert("Please Be Sure To Fill Out The Whole Form");
     }

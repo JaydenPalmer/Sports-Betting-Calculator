@@ -66,6 +66,11 @@ export const MyPicks = ({ currentUser }) => {
     navigate(`/mypicks/${event.target.value}`);
   };
 
+  const handleEditParlayBtn = (event) => {
+    event.preventDefault();
+    navigate(`/mypicks/parlay/${event.target.value}`);
+  };
+
   const deletePickBtn = (event) => {
     const pickId = parseInt(event.target.value);
     deletePick(pickId).then(refreshData);
@@ -84,7 +89,7 @@ export const MyPicks = ({ currentUser }) => {
           <ParlayDisplay
             parlays={parlays}
             parlayDetails={parlayDetails}
-            handleEditBtn={handleEditBtn}
+            handleEditParlayBtn={handleEditParlayBtn}
             deleteParlayBtn={deleteParlayBtn}
             currentUser={currentUser}
           />

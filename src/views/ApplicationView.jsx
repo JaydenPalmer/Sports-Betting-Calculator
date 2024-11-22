@@ -8,6 +8,7 @@ import { FavoritePicks } from "../components/picks/FavoritePicks";
 import { EditPick } from "../components/picks/EditPick";
 import { AnimatedBackground } from "../components/animations/background";
 import { UserProfile } from "../components/profile/UserProfile";
+import { EditParlay } from "../components/picks/EditParlay";
 
 export const ApplicationViews = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -49,6 +50,10 @@ export const ApplicationViews = () => {
         <Route
           path="/mypicks/:pickId"
           element={<EditPick currentUser={currentUser} />}
+        />
+        <Route
+          path="mypicks/parlay/:parlayId"
+          element={<EditParlay currentUser={currentUser} />}
         />
         <Route path="/userprofile/:userId" element={<UserProfile />} />
       </Route>

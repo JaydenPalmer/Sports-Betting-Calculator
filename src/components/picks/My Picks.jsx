@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { deletePick, getAllPicks } from "../../services/pickService";
 import { useNavigate } from "react-router-dom";
 import { ParlayDisplay } from "../parlays/ParlayDisplay";
-import { getAllParlays } from "../../services/parlayService";
+import { deleteParlay, getAllParlays } from "../../services/parlayService";
 
 export const MyPicks = ({ currentUser }) => {
   const [picks, setPicks] = useState([]);
@@ -12,29 +12,54 @@ export const MyPicks = ({ currentUser }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Get all picks first
-    getAllPicks().then((allPicks) => {
-      const filteredPicks = allPicks.filter(
-        (pick) => pick.userId === parseInt(currentUser)
-      );
-      // Look for picks with parlayId > 0
-      const isParlay = filteredPicks.filter((pick) => pick.parlayId > 0);
-      // Use explicit comparison for non-parlay picks
-      const notParlay = filteredPicks.filter(
-        (pick) => pick.parlayId === 0 || pick.parlayId === null
-      );
-      setPicks(notParlay);
-      setParlayDetails(isParlay);
-    });
+    Promise.all([getAllPicks(), getAllParlays()]).then(
+      ([allPicks, allParlays]) => {
+        const userPicks = allPicks.filter(
+          (pick) => pick.userId === parseInt(currentUser)
+        );
+        const userParlays = allParlays.filter(
+          (parlay) => parlay.userId === parseInt(currentUser)
+        );
 
-    // Get and filter parlays by current user
-    getAllParlays().then((allParlays) => {
-      const filteredParlays = allParlays.filter(
-        (parlay) => parlay.userId === parseInt(currentUser)
-      );
-      setParlays(filteredParlays);
-    });
+        const parlayPickIds = userParlays.flatMap((parlay) => parlay.pickIds);
+        const parlayPicks = userPicks.filter((pick) =>
+          parlayPickIds.includes(pick.id)
+        );
+        const singlePicks = userPicks.filter(
+          (pick) => !parlayPickIds.includes(pick.id)
+        );
+
+        setPicks(singlePicks);
+        setParlayDetails(parlayPicks);
+        setParlays(userParlays);
+      }
+    );
   }, [currentUser]);
+
+  const refreshData = () => {
+    Promise.all([getAllPicks(), getAllParlays()]).then(
+      ([allPicks, allParlays]) => {
+        const userPicks = allPicks.filter(
+          (pick) => pick.userId === parseInt(currentUser)
+        );
+        const userParlays = allParlays.filter(
+          (parlay) => parlay.userId === parseInt(currentUser)
+        );
+
+        const parlayPickIds = userParlays.flatMap((parlay) => parlay.pickIds);
+        const parlayPicks = userPicks.filter((pick) =>
+          parlayPickIds.includes(pick.id)
+        );
+        const singlePicks = userPicks.filter(
+          (pick) => !parlayPickIds.includes(pick.id)
+        );
+
+        setPicks(singlePicks);
+        setParlayDetails(parlayPicks);
+        setParlays(userParlays);
+      }
+    );
+  };
 
   const handleEditBtn = (event) => {
     event.preventDefault();
@@ -42,19 +67,14 @@ export const MyPicks = ({ currentUser }) => {
   };
 
   const deletePickBtn = (event) => {
-    deletePick(parseInt(event.target.value)).then(() => {
-      getAllPicks().then((allPicks) => {
-        const filteredPicks = allPicks.filter(
-          (pick) => pick.userId === parseInt(currentUser)
-        );
-        const notParlay = filteredPicks.filter(
-          (pick) => pick.parlayId === 0 || pick.parlayId === null
-        );
-        const isParlay = filteredPicks.filter((pick) => pick.parlayId > 0);
-        setPicks(notParlay);
-        setParlayDetails(isParlay);
-      });
-    });
+    const pickId = parseInt(event.target.value);
+    deletePick(pickId).then(refreshData);
+  };
+
+  const deleteParlayBtn = (event) => {
+    const parlayId = parseInt(event.target.value);
+    const parlay = parlays.find((p) => p.id === parlayId);
+    deleteParlay(parlay.id, parlay.pickIds).then(refreshData);
   };
 
   return (
@@ -65,7 +85,7 @@ export const MyPicks = ({ currentUser }) => {
             parlays={parlays}
             parlayDetails={parlayDetails}
             handleEditBtn={handleEditBtn}
-            deletePickBtn={deletePickBtn}
+            deleteParlayBtn={deleteParlayBtn}
             currentUser={currentUser}
           />
         }

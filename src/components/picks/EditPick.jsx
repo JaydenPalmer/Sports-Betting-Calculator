@@ -91,7 +91,6 @@ export const EditPick = ({ currentUser }) => {
         predictedValue: parseFloat(predictedValue),
         isOver: selectedOverUnder === "Over",
         predictedPercentage: parseInt(predictedPercentage),
-        parlayId: parseInt(currentPick.parlayId),
       };
 
       updatePick(pickId, pickObj).then(() => navigate("/mypicks"));

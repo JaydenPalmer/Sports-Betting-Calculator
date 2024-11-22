@@ -6,7 +6,7 @@ export const ParlayDisplay = ({
   parlayDetails,
   handleTailBtn,
   handleEditBtn,
-  deletePickBtn,
+  deleteParlayBtn,
   currentUser,
   currentUserTails,
 }) => {
@@ -14,8 +14,8 @@ export const ParlayDisplay = ({
     <>
       {parlays.map((parlay) => {
         // Get all picks for this parlay
-        const parlayPicks = parlayDetails.filter(
-          (pick) => pick.parlayId === parlay.id
+        const parlayPicks = parlayDetails.filter((pick) =>
+          parlay.pickIds.includes(pick.id)
         );
 
         return (
@@ -71,9 +71,7 @@ export const ParlayDisplay = ({
                     className="parlay-tail-button"
                     onClick={(event) => handleTailBtn(event, parlay.id)}
                   >
-                    {currentUserTails?.find(
-                      (tail) => tail.parlayId === parlay.id
-                    )
+                    {currentUserTails?.find((tail) => tail.pickId === parlay.id)
                       ? "Trash"
                       : "Tail"}
                   </button>
@@ -88,7 +86,7 @@ export const ParlayDisplay = ({
                     <button
                       className="parlay-delete-button"
                       value={parlay.id}
-                      onClick={deletePickBtn}
+                      onClick={deleteParlayBtn}
                     >
                       Delete
                     </button>

@@ -29,9 +29,6 @@ export const updatePick = (pickId, updatedPick) => {
 export const deletePick = (pickId) => {
   return fetch(`http://localhost:8088/picks/${pickId}`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
   });
 };
 

@@ -8,7 +8,7 @@ import {
   postTail,
 } from "../../services/tailsService";
 import { Link, useNavigate } from "react-router-dom";
-import { getAllParlays } from "../../services/parlayService";
+import { deleteParlay, getAllParlays } from "../../services/parlayService";
 import { ParlayDisplay } from "../parlays/ParlayDisplay";
 
 export const AllPicks = ({ currentUser }) => {
@@ -20,22 +20,23 @@ export const AllPicks = ({ currentUser }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllPicks().then((picks) => {
-      // Use explicit comparison for zero
-      const notParlay = picks.filter(
-        (pick) => pick.parlayId === 0 || pick.parlayId === null
-      );
-      // Look for picks with parlayId > 0
-      const isParlay = picks.filter((pick) => pick.parlayId > 0);
-      setPicks(notParlay);
-      setParlayDetails(isParlay);
-    });
-    getAllTails().then((tails) => {
-      setAllTails(tails);
-    });
-    getAllParlays().then((p) => {
-      setParlays(p);
-    });
+    Promise.all([getAllPicks(), getAllParlays(), getAllTails()]).then(
+      ([allPicks, allParlays, tails]) => {
+        // Split picks into parlay and non-parlay
+        const parlayPickIds = allParlays.flatMap((parlay) => parlay.pickIds);
+        const parlayPicks = allPicks.filter((pick) =>
+          parlayPickIds.includes(pick.id)
+        );
+        const singlePicks = allPicks.filter(
+          (pick) => !parlayPickIds.includes(pick.id)
+        );
+
+        setPicks(singlePicks);
+        setParlayDetails(parlayPicks);
+        setParlays(allParlays);
+        setAllTails(tails);
+      }
+    );
   }, [currentUser]);
 
   useEffect(() => {
@@ -43,6 +44,31 @@ export const AllPicks = ({ currentUser }) => {
       setCurrentUserTails(userTails);
     });
   }, [allTails]);
+
+  const refreshData = () => {
+    Promise.all([getAllPicks(), getAllParlays(), getAllTails()]).then(
+      ([allPicks, allParlays, tails]) => {
+        // Split picks into parlay and non-parlay
+        const parlayPickIds = allParlays.flatMap((parlay) => parlay.pickIds);
+        const parlayPicks = allPicks.filter((pick) =>
+          parlayPickIds.includes(pick.id)
+        );
+        const singlePicks = allPicks.filter(
+          (pick) => !parlayPickIds.includes(pick.id)
+        );
+
+        setPicks(singlePicks);
+        setParlayDetails(parlayPicks);
+        setParlays(allParlays);
+        setAllTails(tails);
+
+        // Update current user tails
+        getTailsByUserId(parseInt(currentUser)).then((userTails) => {
+          setCurrentUserTails(userTails);
+        });
+      }
+    );
+  };
 
   const handleTailBtn = async (event, pickId) => {
     event.preventDefault();
@@ -69,23 +95,30 @@ export const AllPicks = ({ currentUser }) => {
   };
 
   const deletePickBtn = (event) => {
-    deletePick(parseInt(event.target.value)).then(() => {
-      getAllPicks().then(setPicks);
-    });
+    const pickId = parseInt(event.target.value);
+    deletePick(pickId).then(refreshData);
+  };
+
+  const deleteParlayBtn = (event) => {
+    const parlayId = parseInt(event.target.value);
+    const parlay = parlays.find((p) => p.id === parlayId);
+    deleteParlay(parlay.id, parlay.pickIds).then(refreshData);
   };
 
   return (
     <div className="picks-container">
       <ul className="picks-grid">
-        <ParlayDisplay
-          parlays={parlays}
-          parlayDetails={parlayDetails}
-          handleEditBtn={handleEditBtn}
-          handleTailBtn={handleTailBtn}
-          deletePickBtn={deletePickBtn}
-          currentUser={currentUser}
-          currentUserTails={currentUserTails}
-        />
+        {
+          <ParlayDisplay
+            parlays={parlays}
+            parlayDetails={parlayDetails}
+            handleEditBtn={handleEditBtn}
+            handleTailBtn={handleTailBtn}
+            deleteParlayBtn={deleteParlayBtn}
+            currentUser={currentUser}
+            currentUserTails={currentUserTails}
+          />
+        }
         {picks.map((pick) => (
           <li key={pick.id} className="pick-card">
             <div className="image-container">

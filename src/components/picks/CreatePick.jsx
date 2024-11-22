@@ -110,7 +110,6 @@ export const CreatePick = ({ currentUser }) => {
         predictedValue: parseFloat(predictedValue),
         isOver: selectedOverUnder === "Over" ? true : false,
         predictedPercentage: parseInt(predictedPercentage),
-        parlayId: 0,
       };
 
       postPick(pickObj)

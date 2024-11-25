@@ -8,26 +8,34 @@ export const getTailsByUserId = (userId) => {
   );
 };
 
-export const postTail = (tail) => {
-  return fetch(`http://localhost:8088/tails`, {
+export const postTail = async (tailObj) => {
+  return await fetch("http://localhost:8088/tails", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(tail),
+    body: JSON.stringify(tailObj),
   });
 };
 
-export const deleteTail = (tailId) => {
-  console.log("DELETE TAIL CALLED WITH ID:", tailId);
-  return fetch(`http://localhost:8088/tails/${tailId}`, {
+export const deleteTail = async (tailId) => {
+  return await fetch(`http://localhost:8088/tails/${tailId}`, {
     method: "DELETE",
+  });
+};
+
+export const postParlayTail = async (parlayTailObj) => {
+  return await fetch("http://localhost:8088/parlayTails", {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Delete failed");
-    }
+    body: JSON.stringify(parlayTailObj),
+  });
+};
+
+export const deleteParlayTail = async (parlayTailId) => {
+  return await fetch(`http://localhost:8088/parlayTails/${parlayTailId}`, {
+    method: "DELETE",
   });
 };

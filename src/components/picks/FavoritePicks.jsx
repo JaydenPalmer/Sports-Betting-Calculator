@@ -1,81 +1,156 @@
 import { useEffect, useState } from "react";
-import { deleteTail, getTailsByUserId } from "../../services/tailsService";
 import { getAllPicks } from "../../services/pickService";
+import {
+  deleteParlayTail,
+  deleteTail,
+  getAllTails,
+  getTailsByUserId,
+  postParlayTail,
+  postTail,
+} from "../../services/tailsService";
+import {
+  getAllParlays,
+  getUserParlayTails,
+} from "../../services/parlayService";
 import { Link } from "react-router-dom";
+import { ParlayDisplay } from "../parlays/ParlayDisplay";
 
 export const FavoritePicks = ({ currentUser }) => {
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState([]); // regular tailed picks
+  const [parlays, setParlays] = useState([]); // all parlays
+  const [parlayDetails, setParlayDetails] = useState([]); // picks that make up the parlays
+  const [allTails, setAllTails] = useState([]);
   const [currentUserTails, setCurrentUserTails] = useState([]);
+  const [parlayTails, setParlayTails] = useState([]);
 
   // Initial load
   useEffect(() => {
     Promise.all([
-      fetch(
-        "http://localhost:8088/picks?_expand=player&_expand=stat&_expand=user"
-      ).then((res) => res.json()),
-      fetch(`http://localhost:8088/tails?userId=${currentUser}`).then((res) =>
-        res.json()
-      ),
-    ]).then(([allPicks, userTails]) => {
-      const filteredPicks = allPicks.filter((pick) =>
+      getAllPicks(),
+      getAllParlays(),
+      getAllTails(),
+      getUserParlayTails(currentUser),
+    ]).then(([allPicks, allParlays, tails, userParlayTails]) => {
+      // Get user's tailed picks
+      const userTails = tails.filter(
+        (tail) => tail.userId === parseInt(currentUser)
+      );
+
+      // Get individually tailed picks
+      const tailedPicks = allPicks.filter((pick) =>
         userTails.some((tail) => tail.pickId === pick.id)
       );
-      setFavorites(filteredPicks);
-      setCurrentUserTails(userTails);
+
+      // Get tailed parlays
+      const userTailedParlays = allParlays.filter((parlay) =>
+        userParlayTails.some((tail) => tail.parlayId === parlay.id)
+      );
+
+      // Get all picks that are part of tailed parlays
+      const parlayPickIds = userTailedParlays.flatMap(
+        (parlay) => parlay.pickIds
+      );
+      const parlayPicks = allPicks.filter((pick) =>
+        parlayPickIds.includes(pick.id)
+      );
+
+      setFavorites(tailedPicks);
+      setParlayDetails(parlayPicks);
+      setParlays(userTailedParlays);
+      setAllTails(tails);
+      setParlayTails(userParlayTails);
     });
   }, [currentUser]);
 
-  const handleTailBtn = async (event, pickId) => {
-    event.preventDefault();
+  useEffect(() => {
+    getTailsByUserId(parseInt(currentUser)).then((userTails) => {
+      setCurrentUserTails(userTails);
+    });
+  }, [allTails]);
 
-    try {
-      // Find the specific tail
-      const tailToDelete = currentUserTails.find(
-        (tail) =>
-          tail.pickId === pickId && tail.userId === parseInt(currentUser)
+  const handlePickTailBtn = async (event, pickId) => {
+    event.preventDefault();
+    const isTailing = currentUserTails.find((tail) => tail.pickId === pickId);
+
+    if (!isTailing) {
+      // Add new tail
+      const tailToBePosted = {
+        userId: parseInt(currentUser),
+        pickId: pickId,
+      };
+      await postTail(tailToBePosted);
+    } else {
+      // Delete existing tail
+      await deleteTail(isTailing.id);
+    }
+    refreshData();
+  };
+
+  const handleParlayTailBtn = async (event, parlayId) => {
+    event.preventDefault();
+    const isTailing = parlayTails.find((tail) => tail.parlayId === parlayId);
+
+    if (!isTailing) {
+      // Add new parlay tail
+      const parlayTailToPost = {
+        userId: parseInt(currentUser),
+        parlayId: parlayId,
+      };
+      await postParlayTail(parlayTailToPost);
+    } else {
+      // Delete existing parlay tail
+      await deleteParlayTail(isTailing.id);
+    }
+    refreshData();
+  };
+
+  const refreshData = () => {
+    Promise.all([
+      getAllPicks(),
+      getAllParlays(),
+      getAllTails(),
+      getUserParlayTails(currentUser),
+    ]).then(([allPicks, allParlays, tails, userParlayTails]) => {
+      const userTails = tails.filter(
+        (tail) => tail.userId === parseInt(currentUser)
       );
 
-      if (tailToDelete) {
-        // Only make the delete request
-        const deleteResponse = await fetch(
-          `http://localhost:8088/tails/${tailToDelete.id}`,
-          {
-            method: "DELETE",
-          }
-        );
+      const tailedPicks = allPicks.filter((pick) =>
+        userTails.some((tail) => tail.pickId === pick.id)
+      );
 
-        if (!deleteResponse.ok) {
-          throw new Error("Failed to delete tail");
-        }
+      const userTailedParlays = allParlays.filter((parlay) =>
+        userParlayTails.some((tail) => tail.parlayId === parlay.id)
+      );
 
-        // Only get tails for current user
-        const newTailsResponse = await fetch(
-          `http://localhost:8088/tails?userId=${currentUser}`
-        );
-        const newTails = await newTailsResponse.json();
+      const parlayPickIds = userTailedParlays.flatMap(
+        (parlay) => parlay.pickIds
+      );
+      const parlayPicks = allPicks.filter((pick) =>
+        parlayPickIds.includes(pick.id)
+      );
 
-        // Get all picks again
-        const newPicksResponse = await fetch(
-          "http://localhost:8088/picks?_expand=player&_expand=stat&_expand=user"
-        );
-        const allPicks = await newPicksResponse.json();
-
-        // Filter favorites based on new tails
-        const newFavorites = allPicks.filter((pick) =>
-          newTails.some((tail) => tail.pickId === pick.id)
-        );
-
-        setCurrentUserTails(newTails);
-        setFavorites(newFavorites);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+      setFavorites(tailedPicks);
+      setParlayDetails(parlayPicks);
+      setParlays(userTailedParlays);
+      setAllTails(tails);
+      setParlayTails(userParlayTails);
+    });
   };
 
   return (
     <div className="picks-container">
       <ul className="picks-grid">
+        {parlays.length > 0 && (
+          <ParlayDisplay
+            parlays={parlays}
+            parlayDetails={parlayDetails}
+            handleTailBtn={handleParlayTailBtn}
+            currentUser={currentUser}
+            currentUserTails={parlayTails}
+          />
+        )}
+
         {favorites?.map((pick) => (
           <li key={pick.id} className="pick-card">
             <div className="image-container">
@@ -111,7 +186,7 @@ export const FavoritePicks = ({ currentUser }) => {
                 </Link>
                 <button
                   className="tail-button"
-                  onClick={(event) => handleTailBtn(event, pick.id)}
+                  onClick={(event) => handlePickTailBtn(event, pick.id)}
                 >
                   TRASH
                 </button>

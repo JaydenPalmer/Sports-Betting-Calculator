@@ -71,7 +71,9 @@ export const ParlayDisplay = ({
                     className="parlay-tail-button"
                     onClick={(event) => handleTailBtn(event, parlay.id)}
                   >
-                    {currentUserTails?.find((tail) => tail.pickId === parlay.id)
+                    {currentUserTails?.find(
+                      (tail) => tail.parlayId === parlay.id
+                    )
                       ? "Trash"
                       : "Tail"}
                   </button>

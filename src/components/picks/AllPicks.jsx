@@ -2,13 +2,19 @@ import { useEffect, useState } from "react";
 import { deletePick, getAllPicks, postPick } from "../../services/pickService";
 import "./AllPicks.css";
 import {
+  deleteParlayTail,
   deleteTail,
   getAllTails,
   getTailsByUserId,
+  postParlayTail,
   postTail,
 } from "../../services/tailsService";
 import { Link, useNavigate } from "react-router-dom";
-import { deleteParlay, getAllParlays } from "../../services/parlayService";
+import {
+  deleteParlay,
+  getAllParlays,
+  getUserParlayTails,
+} from "../../services/parlayService";
 import { ParlayDisplay } from "../parlays/ParlayDisplay";
 
 export const AllPicks = ({ currentUser }) => {
@@ -17,26 +23,31 @@ export const AllPicks = ({ currentUser }) => {
   const [parlayDetails, setParlayDetails] = useState([]);
   const [allTails, setAllTails] = useState([]);
   const [currentUserTails, setCurrentUserTails] = useState([]);
+  const [parlayTails, setParlayTails] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    Promise.all([getAllPicks(), getAllParlays(), getAllTails()]).then(
-      ([allPicks, allParlays, tails]) => {
-        // Split picks into parlay and non-parlay
-        const parlayPickIds = allParlays.flatMap((parlay) => parlay.pickIds);
-        const parlayPicks = allPicks.filter((pick) =>
-          parlayPickIds.includes(pick.id)
-        );
-        const singlePicks = allPicks.filter(
-          (pick) => !parlayPickIds.includes(pick.id)
-        );
+    Promise.all([
+      getAllPicks(),
+      getAllParlays(),
+      getAllTails(),
+      getUserParlayTails(currentUser),
+    ]).then(([allPicks, allParlays, tails, userParlayTails]) => {
+      // Split picks into parlay and non-parlay
+      const parlayPickIds = allParlays.flatMap((parlay) => parlay.pickIds);
+      const parlayPicks = allPicks.filter((pick) =>
+        parlayPickIds.includes(pick.id)
+      );
+      const singlePicks = allPicks.filter(
+        (pick) => !parlayPickIds.includes(pick.id)
+      );
 
-        setPicks(singlePicks);
-        setParlayDetails(parlayPicks);
-        setParlays(allParlays);
-        setAllTails(tails);
-      }
-    );
+      setPicks(singlePicks);
+      setParlayDetails(parlayPicks);
+      setParlays(allParlays);
+      setAllTails(tails);
+      setParlayTails(userParlayTails);
+    });
   }, [currentUser]);
 
   useEffect(() => {
@@ -46,31 +57,34 @@ export const AllPicks = ({ currentUser }) => {
   }, [allTails]);
 
   const refreshData = () => {
-    Promise.all([getAllPicks(), getAllParlays(), getAllTails()]).then(
-      ([allPicks, allParlays, tails]) => {
-        // Split picks into parlay and non-parlay
-        const parlayPickIds = allParlays.flatMap((parlay) => parlay.pickIds);
-        const parlayPicks = allPicks.filter((pick) =>
-          parlayPickIds.includes(pick.id)
-        );
-        const singlePicks = allPicks.filter(
-          (pick) => !parlayPickIds.includes(pick.id)
-        );
+    Promise.all([
+      getAllPicks(),
+      getAllParlays(),
+      getAllTails(),
+      getUserParlayTails(currentUser),
+    ]).then(([allPicks, allParlays, tails, userParlayTails]) => {
+      const parlayPickIds = allParlays.flatMap((parlay) => parlay.pickIds);
+      const parlayPicks = allPicks.filter((pick) =>
+        parlayPickIds.includes(pick.id)
+      );
+      const singlePicks = allPicks.filter(
+        (pick) => !parlayPickIds.includes(pick.id)
+      );
 
-        setPicks(singlePicks);
-        setParlayDetails(parlayPicks);
-        setParlays(allParlays);
-        setAllTails(tails);
+      setPicks(singlePicks);
+      setParlayDetails(parlayPicks);
+      setParlays(allParlays);
+      setAllTails(tails);
+      setParlayTails(userParlayTails);
 
-        // Update current user tails
-        getTailsByUserId(parseInt(currentUser)).then((userTails) => {
-          setCurrentUserTails(userTails);
-        });
-      }
-    );
+      getTailsByUserId(parseInt(currentUser)).then((userTails) => {
+        setCurrentUserTails(userTails);
+      });
+    });
   };
 
-  const handleTailBtn = async (event, pickId) => {
+  // Handler for regular pick tails
+  const handlePickTailBtn = async (event, pickId) => {
     event.preventDefault();
     const isTailing = currentUserTails.find((tail) => tail.pickId === pickId);
 
@@ -81,13 +95,27 @@ export const AllPicks = ({ currentUser }) => {
       };
       await postTail(tailToBePosted);
     } else {
-      const tailToDelete = currentUserTails.find(
-        (tail) => tail.pickId === pickId
-      );
-      await deleteTail(tailToDelete.id);
+      await deleteTail(isTailing.id);
     }
     const updatedTails = await getAllTails();
     setAllTails(updatedTails);
+  };
+
+  // Handler for parlay tails
+  const handleParlayTailBtn = async (event, parlayId) => {
+    event.preventDefault();
+    const isTailing = parlayTails.find((tail) => tail.parlayId === parlayId);
+
+    if (!isTailing) {
+      const parlayTailToPost = {
+        userId: parseInt(currentUser),
+        parlayId: parlayId,
+      };
+      await postParlayTail(parlayTailToPost);
+    } else {
+      await deleteParlayTail(isTailing.id);
+    }
+    refreshData();
   };
 
   const handleEditBtn = (pickId) => {
@@ -113,10 +141,10 @@ export const AllPicks = ({ currentUser }) => {
             parlays={parlays}
             parlayDetails={parlayDetails}
             handleEditBtn={handleEditBtn}
-            handleTailBtn={handleTailBtn}
+            handleTailBtn={handleParlayTailBtn}
             deleteParlayBtn={deleteParlayBtn}
             currentUser={currentUser}
-            currentUserTails={currentUserTails}
+            currentUserTails={parlayTails}
           />
         }
         {picks.map((pick) => (
@@ -159,7 +187,7 @@ export const AllPicks = ({ currentUser }) => {
                   {parseInt(currentUser) !== pick.userId ? (
                     <button
                       className="tail-button"
-                      onClick={(event) => handleTailBtn(event, pick.id)}
+                      onClick={(event) => handlePickTailBtn(event, pick.id)}
                     >
                       {currentUserTails.find((tail) => tail.pickId === pick.id)
                         ? "Trash"

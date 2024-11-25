@@ -283,6 +283,96 @@
       "predictedValue": 0.5,
       "isOver": false,
       "predictedPercentage": 66
+    },
+    {
+      "userId": 1,
+      "statId": 2,
+      "playerId": 1,
+      "predictedValue": 0.5,
+      "isOver": true,
+      "predictedPercentage": 99,
+      "id": 25
+    },
+    {
+      "userId": 1,
+      "statId": 1,
+      "playerId": 6,
+      "predictedValue": 201,
+      "isOver": true,
+      "predictedPercentage": 48,
+      "id": 26
+    },
+    {
+      "id": 30,
+      "userId": 3,
+      "statId": 1,
+      "playerId": 1,
+      "predictedValue": 285.5,
+      "isOver": true,
+      "predictedPercentage": 75
+    },
+    {
+      "id": 31,
+      "userId": 3,
+      "statId": 2,
+      "playerId": 2,
+      "predictedValue": 2.5,
+      "isOver": false,
+      "predictedPercentage": 68
+    },
+    {
+      "id": 32,
+      "userId": 3,
+      "statId": 3,
+      "playerId": 6,
+      "predictedValue": 65.5,
+      "isOver": true,
+      "predictedPercentage": 82
+    },
+    {
+      "id": 33,
+      "userId": 1,
+      "statId": 5,
+      "playerId": 7,
+      "predictedValue": 0.5,
+      "isOver": true,
+      "predictedPercentage": 71
+    },
+    {
+      "id": 34,
+      "userId": 1,
+      "statId": 4,
+      "playerId": 8,
+      "predictedValue": 0.5,
+      "isOver": true,
+      "predictedPercentage": 65
+    },
+    {
+      "id": 35,
+      "userId": 2,
+      "statId": 1,
+      "playerId": 9,
+      "predictedValue": 255.5,
+      "isOver": false,
+      "predictedPercentage": 77
+    },
+    {
+      "userId": 1,
+      "statId": 2,
+      "playerId": 1,
+      "predictedValue": 0.5,
+      "isOver": true,
+      "predictedPercentage": 99,
+      "id": 36
+    },
+    {
+      "userId": 1,
+      "statId": 1,
+      "playerId": 4,
+      "predictedValue": 199.5,
+      "isOver": true,
+      "predictedPercentage": 67,
+      "id": 37
     }
   ],
   "parlays": [
@@ -313,6 +403,60 @@
         24
       ],
       "id": 5
+    },
+    {
+      "userId": 1,
+      "predictedPercentage": 48,
+      "pickIds": [
+        25,
+        26
+      ],
+      "id": 6
+    },
+    {
+      "id": 10,
+      "userId": 3,
+      "predictedPercentage": 65,
+      "pickIds": [
+        30,
+        31
+      ]
+    },
+    {
+      "id": 11,
+      "userId": 3,
+      "predictedPercentage": 70,
+      "pickIds": [
+        30,
+        32
+      ]
+    },
+    {
+      "id": 12,
+      "userId": 1,
+      "predictedPercentage": 68,
+      "pickIds": [
+        33,
+        34
+      ]
+    },
+    {
+      "id": 13,
+      "userId": 2,
+      "predictedPercentage": 73,
+      "pickIds": [
+        35,
+        31
+      ]
+    },
+    {
+      "userId": 1,
+      "predictedPercentage": 66,
+      "pickIds": [
+        36,
+        37
+      ],
+      "id": 14
     }
   ],
   "tails": [
@@ -323,8 +467,35 @@
     },
     {
       "userId": 1,
+      "pickId": 4,
+      "id": 7
+    },
+    {
+      "userId": 1,
       "pickId": 9,
       "id": 8
+    },
+    {
+      "userId": 1,
+      "pickId": 11,
+      "id": 9
+    }
+  ],
+  "parlayTails": [
+    {
+      "id": 2,
+      "userId": 2,
+      "parlayId": 10
+    },
+    {
+      "id": 4,
+      "userId": 3,
+      "parlayId": 13
+    },
+    {
+      "userId": 1,
+      "parlayId": 11,
+      "id": 5
     }
   ]
 }

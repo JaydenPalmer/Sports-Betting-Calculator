@@ -54,3 +54,9 @@ export const updateParlay = async (parlayId, parlay) => {
     body: JSON.stringify(parlay),
   });
 };
+
+export const getUserParlayTails = async (currentUser) => {
+  return fetch(`http://localhost:8088/parlayTails?userId=${currentUser}`).then(
+    (res) => res.json()
+  );
+};

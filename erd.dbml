@@ -1,10 +1,3 @@
-Table users {
- id integer [primary key]
- name varchar
- email varchar
- password varchar
-}
-
 Table players {
  id integer [primary key]
  name varchar
@@ -31,6 +24,13 @@ Table positionStats {
  positionId integer [ref: > positions.id]
 }
 
+Table users {
+ id integer [primary key]
+ name varchar
+ email varchar
+ password varchar
+}
+
 Table picks {
  id integer [primary key]
  userId integer [ref: > users.id]
@@ -45,22 +45,17 @@ Table parlays {
  id integer [primary key]
  userId integer [ref: > users.id]
  predictedPercentage integer
- pickIds integer[]
+ pickIds integer[] 
 }
 
 Table tails {
- id integer [primary key]
+ id integer [primary key]  
  userId integer [ref: > users.id]
  pickId integer [ref: > picks.id]
 }
 
-Ref: parlays.pickIds > picks.id
-Ref: stats.id < positionStats.statId
-Ref: positions.id < positionStats.positionId
-Ref: positions.id < players.positionId
-Ref: users.id < picks.userId
-Ref: stats.id < picks.statId
-Ref: players.id < picks.playerId
-Ref: users.id < parlays.userId
-Ref: users.id < tails.userId
-Ref: picks.id < tails.pickId
+Table parlayTails {
+ id integer [primary key]
+ userId integer [ref: > users.id]
+ parlayId integer [ref: > parlays.id]
+}
